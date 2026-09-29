@@ -1,0 +1,50 @@
+---
+import FoundationPage from '../components/FoundationPage.astro';
+import HospitalityServicesPage from '../components/HospitalityServicesPage.astro';
+import SpaAssessmentPage from '../components/SpaAssessmentPage.astro';
+import TeamTrainingPage from '../components/TeamTrainingPage.astro';
+import ServiceDetailPage from '../components/ServiceDetailPage.astro';
+import AboutPage from '../components/AboutPage.astro';
+import ReferencesPage from '../components/ReferencesPage.astro';
+import AcademyPage from '../components/AcademyPage.astro';
+import ContactPage from '../components/ContactPage.astro';
+import { sitePages } from '../data/pages';
+
+export function getStaticPaths() {
+  return sitePages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+const isServicesOverview = page.slug === 'services' || page.slug === 'fr/services';
+const isAssessment = page.slug === 'services/assessment' || page.slug === 'fr/services/diagnostic';
+const isTraining = page.slug === 'services/team-training' || page.slug === 'fr/services/formation-equipe';
+const isSignature = page.slug === 'services/signature-treatment' || page.slug === 'fr/services/soin-signature';
+const isSupport = page.slug === 'services/ongoing-support' || page.slug === 'fr/services/accompagnement';
+const isAbout = page.slug === 'about' || page.slug === 'fr/a-propos';
+const isReferences = page.slug === 'references' || page.slug === 'fr/references';
+const isAcademy = page.slug === 'academy' || page.slug === 'fr/formations';
+const isContact = page.slug === 'contact' || page.slug === 'fr/contact';
+---
+
+{isServicesOverview
+  ? <HospitalityServicesPage lang={page.lang} />
+  : isAssessment
+    ? <SpaAssessmentPage lang={page.lang} />
+    : isTraining
+      ? <TeamTrainingPage lang={page.lang} />
+    : isSignature
+      ? <ServiceDetailPage lang={page.lang} service="signature" />
+    : isSupport
+      ? <ServiceDetailPage lang={page.lang} service="support" />
+    : isAbout
+      ? <AboutPage lang={page.lang} />
+    : isReferences
+      ? <ReferencesPage lang={page.lang} />
+    : isAcademy
+      ? <AcademyPage lang={page.lang} />
+    : isContact
+      ? <ContactPage lang={page.lang} />
+    : <FoundationPage {page} />}

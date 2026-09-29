@@ -1,0 +1,64 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/images/2hands-logo.png';
+import { routes, type Language } from '../data/site';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const r = routes[lang];
+const content = lang === 'en'
+  ? {
+      intro: 'Excellence in treatment, from the practitioner’s hands to the guest experience. Based in Casablanca, 2Hands works in Rabat and across Morocco according to each project.',
+      hospitality: 'Hotels & Spas', explore: '2Hands', information: 'Information',
+      assessment: 'Performance assessment', training: 'Team training', signature: 'Signature treatments', support: 'Ongoing support',
+      about: 'Brooke Wescott', references: 'References', academy: 'Academy', contact: 'Contact',
+      language: 'Version française', languageHref: routes.fr.home,
+      location: 'Casablanca · Rabat · Projects across Morocco',
+    }
+  : {
+      intro: 'L’excellence du soin, de la main à l’expérience client. Basée à Casablanca, 2Hands intervient à Rabat et ailleurs au Maroc selon les projets.',
+      hospitality: 'Hôtellerie & Spas', explore: '2Hands', information: 'Informations',
+      assessment: 'Diagnostic de performance', training: 'Formation des équipes', signature: 'Soins signature', support: 'Accompagnement continu',
+      about: 'Brooke Wescott', references: 'Références', academy: 'Formations', contact: 'Contact',
+      language: 'English version', languageHref: routes.en.home,
+      location: 'Casablanca · Rabat · Interventions au Maroc',
+    };
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-intro">
+      <Image src={logo} alt="2Hands" width={150} loading="lazy" />
+      <p>{content.intro}</p>
+    </div>
+    <div>
+      <h2>{content.hospitality}</h2>
+      <nav>
+        <a href={r.assessment}>{content.assessment}</a>
+        <a href={r.training}>{content.training}</a>
+        <a href={r.signature}>{content.signature}</a>
+        <a href={r.support}>{content.support}</a>
+      </nav>
+    </div>
+    <div>
+      <h2>{content.explore}</h2>
+      <nav>
+        <a href={r.about}>{content.about}</a>
+        <a href={r.references}>{content.references}</a>
+        <a href={r.academy}>{content.academy}</a>
+        <a href={r.contact}>{content.contact}</a>
+      </nav>
+    </div>
+    <div>
+      <h2>{content.information}</h2>
+      <nav>
+        <a href={content.languageHref}>{content.language}</a>
+        <a href="https://ma.linkedin.com/company/2-hands-massage-academy" rel="me noopener" target="_blank">LinkedIn</a>
+      </nav>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© {new Date().getFullYear()} 2Hands</span>
+    <span>{content.location}</span>
+  </div>
+</footer>

@@ -1,0 +1,176 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import type { Language } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  lang: Language;
+  enPath: string;
+  frPath: string;
+  image?: string;
+}
+
+const { title, description, lang, enPath, frPath, image = '/og-default.jpg' } = Astro.props;
+const currentPath = lang === 'en' ? enPath : frPath;
+const canonical = new URL(currentPath, Astro.site);
+const englishUrl = new URL(enPath, Astro.site);
+const frenchUrl = new URL(frPath, Astro.site);
+const socialImage = new URL(image, Astro.site);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={englishUrl} />
+    <link rel="alternate" hreflang="fr" href={frenchUrl} />
+    <link rel="alternate" hreflang="x-default" href={englishUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="2Hands" />
+    <meta property="og:locale" content={lang === 'en' ? 'en_US' : 'fr_FR'} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>{title}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">{lang === 'en' ? 'Skip to content' : 'Aller au contenu'}</a>
+    <Header {lang} {enPath} {frPath} {currentPath} />
+    <slot />
+    <Footer {lang} />
+    <script is:inline>
+      (() => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        const page = document.querySelector('main');
+        if (!page) return;
+
+        document.body.classList.add('site-motion-ready');
+
+        const introSelectors = [
+          '.hospitality-hero-copy > .eyebrow',
+          '.hospitality-hero-copy > h1',
+          '.hospitality-lead',
+          '.hospitality-hero-actions',
+          '.assessment-hero-copy > .eyebrow',
+          '.assessment-hero-copy > h1',
+          '.assessment-lead',
+          '.assessment-hero-actions',
+          '.about-hero-copy > .eyebrow',
+          '.about-hero-copy > h1',
+          '.about-lead',
+          '.about-actions',
+          '.about-facts',
+        ];
+
+        const introElements = [...page.querySelectorAll(introSelectors.join(','))];
+        introElements.forEach((element, index) => {
+          element.setAttribute('data-site-intro', 'copy');
+          element.style.setProperty('--site-intro-delay', `${Math.min(index * 80, 400)}ms`);
+        });
+
+        page.querySelectorAll('.hospitality-hero-visual, .assessment-hero-visual, .about-hero-photo').forEach((element) => {
+          element.setAttribute('data-site-intro', 'image');
+          element.style.setProperty('--site-intro-delay', '120ms');
+        });
+
+        if (page.classList.contains('homepage')) return;
+
+        const revealSelectors = [
+          '.hospitality-proof-grid > div',
+          '.hospitality-section > .container > .eyebrow',
+          '.hospitality-services-title',
+          '.hospitality-service-grid > article',
+          '.hospitality-split > *',
+          '.hospitality-process-grid > article',
+          '.hospitality-founder-strip',
+          '.hospitality-cta-panel',
+          '.assessment-proof-grid > div',
+          '.assessment-section > .container > .eyebrow',
+          '.assessment-split > *',
+          '.assessment-card-grid > article',
+          '.assessment-check-grid > p',
+          '.assessment-process-grid > article',
+          '.assessment-deliverables > *',
+          '.assessment-founder-strip',
+          '.assessment-faq > div:first-child',
+          '.assessment-faq article',
+          '.assessment-cta-panel',
+          '.reference-logo-grid > div',
+          '.reference-story-grid > article',
+          '.academy-route-grid > article',
+          '.contact-grid > *',
+          '.contact-form',
+          '.about-experience-inner > p',
+          '.about-logo-row > div',
+          '.about-journey-intro > *',
+          '.about-journey-gallery > figure',
+          '.about-career-grid > article',
+          '.about-perspective-heading > *',
+          '.about-perspective-grid > article',
+          '.about-expertise-grid > *',
+          '.about-expertise-list > div',
+          '.about-credentials-heading > *',
+          '.about-membership',
+          '.about-recognition-grid > article',
+          '.about-belief-card',
+          '.about-final-cta > .container',
+        ];
+
+        const elements = [...new Set(page.querySelectorAll(revealSelectors.join(',')))];
+        elements.forEach((element) => element.setAttribute('data-site-reveal', ''));
+
+        const staggerGroups = [
+          '.hospitality-proof-grid',
+          '.hospitality-service-grid',
+          '.hospitality-process-grid',
+          '.assessment-proof-grid',
+          '.assessment-card-grid',
+          '.assessment-check-grid',
+          '.assessment-process-grid',
+          '.reference-logo-grid',
+          '.reference-story-grid',
+          '.academy-route-grid',
+          '.about-logo-row',
+          '.about-journey-gallery',
+          '.about-career-grid',
+          '.about-perspective-grid',
+          '.about-expertise-list',
+          '.about-recognition-grid',
+        ];
+
+        staggerGroups.forEach((selector) => {
+          page.querySelectorAll(`${selector} > *`).forEach((element, index) => {
+            element.style.setProperty('--site-reveal-delay', `${Math.min(index * 70, 210)}ms`);
+          });
+        });
+
+        if (!('IntersectionObserver' in window)) {
+          elements.forEach((element) => element.classList.add('is-visible'));
+          return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -7% 0px' });
+
+        requestAnimationFrame(() => elements.forEach((element) => observer.observe(element)));
+      })();
+    </script>
+  </body>
+</html>

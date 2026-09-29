@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/images/2hands-logo.png';
+import { navigation, routes, type Language } from '../data/site';
+
+interface Props {
+  lang: Language;
+  enPath: string;
+  frPath: string;
+  currentPath: string;
+}
+
+const { lang, enPath, frPath, currentPath } = Astro.props;
+const nav = navigation[lang];
+const isActive = (href: string) => href === currentPath || (href === routes[lang].services && currentPath.startsWith(routes[lang].services));
+const labels = lang === 'en'
+  ? { menu: 'Menu', close: 'Close menu', contact: 'Contact', home: '2Hands home' }
+  : { menu: 'Menu', close: 'Fermer le menu', contact: 'Contact', home: 'Accueil 2Hands' };
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href={routes[lang].home} aria-label={labels.home}>
+      <Image src={logo} alt="2Hands Massage Academy" width={150} loading="eager" />
+    </a>
+
+    <nav class="desktop-nav" aria-label={lang === 'en' ? 'Main navigation' : 'Navigation principale'}>
+      {nav.map(([label, href]) => <a class:list={{ active: isActive(href) }} href={href}>{label}</a>)}
+    </nav>
+
+    <div class="header-actions">
+      <div class="language-switcher" aria-label={lang === 'en' ? 'Language' : 'Langue'}>
+        {lang === 'en' ? <a href={frPath} lang="fr">FR</a> : <strong aria-current="page">FR</strong>}
+        <span aria-hidden="true">·</span>
+        {lang === 'fr' ? <a href={enPath} lang="en">EN</a> : <strong aria-current="page">EN</strong>}
+      </div>
+      <a class="button button-outline header-contact" href={routes[lang].contact}>{labels.contact}</a>
+    </div>
+
+    <details class="mobile-menu">
+      <summary>{labels.menu}</summary>
+      <div class="mobile-menu-panel">
+        <nav aria-label={lang === 'en' ? 'Mobile navigation' : 'Navigation mobile'}>
+          {nav.map(([label, href]) => <a class:list={{ active: isActive(href) }} href={href}>{label}</a>)}
+          <a href={routes[lang].contact}>{labels.contact}</a>
+        </nav>
+        <div class="mobile-languages">
+          <a href={enPath} lang="en" aria-current={lang === 'en' ? 'page' : undefined}>English</a>
+          <a href={frPath} lang="fr" aria-current={lang === 'fr' ? 'page' : undefined}>Français</a>
+        </div>
+      </div>
+    </details>
+  </div>
+</header>

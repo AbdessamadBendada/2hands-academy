@@ -1,0 +1,47 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { routes } from '../data/site';
+import type { SitePage } from '../data/pages';
+import teaching from '../assets/images/brooke-teaching.webp';
+import treatment from '../assets/images/current-site-photo-4.jpg';
+import portrait from '../assets/images/brooke-portrait.jpeg';
+
+interface Props { page: SitePage }
+const { page } = Astro.props;
+const images = { teaching, treatment, portrait };
+const isEnglish = page.lang === 'en';
+const r = routes[page.lang];
+---
+
+<BaseLayout title={`${page.title} | 2Hands`} description={page.description} lang={page.lang} enPath={page.enPath} frPath={page.frPath}>
+  <main id="main-content">
+    <section class="interior-hero">
+      <div class="container interior-hero-grid">
+        <div>
+          <p class="eyebrow">{page.eyebrow}</p>
+          <h1>{page.title}</h1>
+          <p class="hero-lead">{page.lead}</p>
+          <div class="button-row">
+            <a class="button button-primary" href={r.contact}>{isEnglish ? 'Start a conversation' : 'Commencer l’échange'}</a>
+            {page.slug.includes('services') && <a class="button button-outline" href={r.services}>{isEnglish ? 'View all services' : 'Voir tous les services'}</a>}
+          </div>
+        </div>
+        <figure class="interior-media">
+          <Image src={images[page.image]} alt={page.title} widths={[640, 900, 1200]} sizes="(min-width: 900px) 48vw, 100vw" loading="eager" fetchpriority="high" />
+        </figure>
+      </div>
+    </section>
+    <section class="section section-soft">
+      <div class="container foundation-grid">
+        <div>
+          <p class="eyebrow">{isEnglish ? 'Page foundation' : 'Structure de la page'}</p>
+          <h2>{isEnglish ? 'Clear information, useful next steps.' : 'Des informations claires et une prochaine étape utile.'}</h2>
+        </div>
+        <div class="foundation-points">
+          {page.points.map((point, index) => <p><span>0{index + 1}</span>{point}</p>)}
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>

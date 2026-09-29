@@ -1,0 +1,142 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { routes, type Language } from '../data/site';
+import '../styles/spa-assessment.css';
+import treatment from '../assets/images/current-site-photo-2.jpg';
+import support from '../assets/images/current-site-photo-1.jpg';
+import portrait from '../assets/images/brooke-portrait.jpeg';
+
+interface Props { lang: Language; service: 'signature' | 'support' }
+const { lang, service } = Astro.props;
+const r = routes[lang];
+const isEnglish = lang === 'en';
+
+const signature = {
+  en: {
+    metaTitle: 'Signature Treatment Development | 2Hands',
+    metaDescription: 'Signature spa treatment concept, protocol and therapist training for hospitality properties with Brooke Wescott.',
+    heroEyebrow: 'Hospitality services · Differentiate', heroTitle: 'Create a signature treatment guests remember and teams can deliver.',
+    heroLead: "2Hands translates a property's identity into a coherent treatment concept, protocol and training experience, without losing sight of technique or operational reality.",
+    heroPrimary: 'Discuss your property', heroSecondary: 'View all services', heroAlt: '2Hands professional massage and spa work',
+    imageNote: 'A distinctive experience should be meaningful to the guest and repeatable across the treatment team.',
+    proof: [['Technique meets hospitality', '2Hands approach'], ['25+ years', 'International practice'], ['Hands-on', 'Practical development'], ['Two perspectives', 'Guest and practitioner']],
+    needEyebrow: 'The need', needTitle: 'A signature treatment needs more than an attractive story.',
+    needCopy: 'The strongest concepts connect the brand, local context, therapeutic intention and guest journey. They also work within real treatment times, therapist capabilities, room setup and product availability. 2Hands develops both the experience and the system required to deliver it consistently.',
+    audienceEyebrow: 'Who it is for', audienceTitle: 'A focused fit for real hospitality needs.',
+    audience: ['New properties building an opening menu', 'Spas refreshing an established treatment offer', 'Hotels seeking a locally relevant hero treatment', 'Teams that need a clearer, more teachable protocol'],
+    includesEyebrow: 'What it includes', includesTitle: 'Detailed enough to be useful. Focused enough to act on.',
+    includesIntro: 'The final engagement is adapted to the property, the team and the operational question being addressed.',
+    includes: ['Concept and treatment story', 'Sequence, rhythm and timing', 'Technique and pressure direction', 'Product and equipment recommendations', 'Written therapist protocol', 'Guest consultation and post-care notes', 'On-site therapist training', 'Pilot, refinement and quality checklist'],
+    processEyebrow: 'How it works', processTitle: 'A clear path from need to action.',
+    process: [['01', 'Discover', 'Understand the property, guest, location, menu and brand intention.'], ['02', 'Create', 'Develop the treatment concept, flow, techniques and supporting details.'], ['03', 'Pilot', 'Test the experience with therapists and refine timing and delivery.'], ['04', 'Transfer', 'Train the team and provide a protocol that supports consistency.']],
+    deliverEyebrow: 'Management receives', deliverTitle: 'A practical output, not a generic report.',
+    deliverables: ['A defined treatment concept', 'A detailed written protocol', 'Recommended products and setup', 'Hands-on team training', 'A practical quality-control checklist'],
+    scopeEyebrow: 'Scope and timing', scopeTitle: 'Built around the brief.',
+    scopeCopy: 'Scope depends on concept depth, protocol complexity, product involvement, team size and whether more than one treatment is being developed.', scopeButton: 'Discuss the scope',
+    founderEyebrow: 'Led by Brooke Wescott', founderTitle: 'Experienced hands. Operational perspective.',
+    founderCopy: 'Brooke brings more than 25 years of international massage and bodywork experience, combining treatment expertise with a practical understanding of guest expectations and therapist longevity.', founderLink: 'Meet Brooke',
+    questionsEyebrow: 'Questions', questionsTitle: 'Before we begin.',
+    questions: [['Can 2Hands work with our existing products?', 'Yes. Development can begin with an established product partner or include recommendations that fit the concept and operations.'], ['Can an existing treatment be refined?', 'Yes. The engagement can improve an existing protocol rather than create a completely new one.'], ['Is therapist training included?', 'Training can be included so the final protocol is understood in practice, not simply delivered as a document.']],
+    ctaEyebrow: 'Start a conversation', ctaTitle: 'Turn your property story into a treatment experience.',
+    ctaCopy: 'Tell Brooke about the property, concept and current menu to begin shaping the right brief.', ctaButton: 'Discuss your property',
+  },
+  fr: {
+    metaTitle: 'Création de soins signature | 2Hands',
+    metaDescription: 'Concept, protocole et formation pour créer un soin signature hôtelier distinctif avec Brooke Wescott.',
+    heroEyebrow: 'Services hôteliers · Différencier', heroTitle: 'Créer un soin signature mémorable et maîtrisé par l’équipe.',
+    heroLead: '2Hands traduit l’identité d’un établissement en concept, protocole et expérience de formation cohérents, sans perdre de vue la technique ni la réalité opérationnelle.',
+    heroPrimary: 'Parler de votre établissement', heroSecondary: 'Voir tous les services', heroAlt: 'Travail professionnel 2Hands en massage et spa',
+    imageNote: 'Une expérience distinctive doit avoir du sens pour le client et rester reproductible par toute l’équipe.',
+    proof: [['Technique et hospitalité', 'L’approche 2Hands'], ['25+ ans', 'Pratique internationale'], ['Pratique', 'Développement concret'], ['Deux regards', 'Client et praticien']],
+    needEyebrow: 'Le besoin', needTitle: 'Un soin signature exige plus qu’une belle histoire.',
+    needCopy: 'Les meilleurs concepts relient la marque, le lieu, l’intention thérapeutique et le parcours client. Ils doivent également fonctionner avec les temps de soin, les compétences de l’équipe, la cabine et les produits disponibles.',
+    audienceEyebrow: 'Pour qui', audienceTitle: 'Une réponse ciblée aux besoins réels de l’hospitalité.',
+    audience: ['Un nouvel établissement qui construit sa carte', 'Un spa qui renouvelle son offre', 'Un hôtel qui recherche un soin phare ancré dans son identité', 'Une équipe qui a besoin d’un protocole plus clair et transmissible'],
+    includesEyebrow: 'Ce qui est inclus', includesTitle: 'Assez détaillé pour être utile. Assez ciblé pour agir.',
+    includesIntro: 'L’intervention finale est adaptée à l’établissement, à l’équipe et à la question opérationnelle.',
+    includes: ['Concept et histoire du soin', 'Séquence, rythme et timing', 'Direction technique et pression', 'Recommandations produits et matériel', 'Protocole praticien écrit', 'Accueil client et conseils après soin', 'Formation pratique de l’équipe', 'Test, ajustement et grille qualité'],
+    processEyebrow: 'Le déroulement', processTitle: 'Un chemin clair du besoin à l’action.',
+    process: [['01', 'Découvrir', 'Comprendre l’établissement, le client, le lieu, la carte et l’intention.'], ['02', 'Créer', 'Développer le concept, la fluidité, les techniques et les détails.'], ['03', 'Tester', 'Expérimenter avec les praticiens et ajuster le rythme et le timing.'], ['04', 'Transmettre', 'Former l’équipe et fournir un protocole qui soutient la régularité.']],
+    deliverEyebrow: 'Pour la direction', deliverTitle: 'Un résultat pratique, pas un rapport générique.',
+    deliverables: ['Un concept de soin défini', 'Un protocole écrit détaillé', 'Des recommandations de produits et de mise en place', 'La formation pratique de l’équipe', 'Une grille de contrôle qualité'],
+    scopeEyebrow: 'Périmètre et calendrier', scopeTitle: 'Construit autour du brief.',
+    scopeCopy: 'Le périmètre dépend de la profondeur du concept, de la complexité du protocole, des produits, de la taille de l’équipe et du nombre de soins développés.', scopeButton: 'Discuter du périmètre',
+    founderEyebrow: 'Avec Brooke Wescott', founderTitle: 'Une expertise pratique et un regard opérationnel.',
+    founderCopy: 'Brooke apporte plus de 25 ans d’expérience internationale en massage et bodywork, avec une compréhension concrète des attentes du client et de la longévité du praticien.', founderLink: 'Découvrir Brooke',
+    questionsEyebrow: 'Questions', questionsTitle: 'Avant de commencer.',
+    questions: [['Peut-on utiliser nos produits actuels ?', 'Oui. Le développement peut partir d’un partenaire produit existant ou inclure des recommandations adaptées.'], ['Peut-on améliorer un soin existant ?', 'Oui. L’intervention peut affiner un protocole actuel plutôt que repartir de zéro.'], ['La formation des praticiens est-elle incluse ?', 'Elle peut être intégrée afin que le protocole soit compris dans la pratique et pas seulement livré comme document.']],
+    ctaEyebrow: 'Commencer l’échange', ctaTitle: 'Transformez l’histoire de votre établissement en expérience de soin.',
+    ctaCopy: 'Présentez à Brooke l’établissement, le concept et la carte actuelle pour commencer à définir le bon brief.', ctaButton: 'Parler de votre établissement',
+  },
+};
+
+const ongoing = {
+  en: {
+    metaTitle: 'Ongoing Spa Performance Support | 2Hands', metaDescription: 'Continuing reassessment, recalibration and spa team performance support with Brooke Wescott.',
+    heroEyebrow: 'Hospitality services · Maintain', heroTitle: 'Protect treatment standards after the first intervention.',
+    heroLead: 'Ongoing support helps management reinforce progress, respond to team changes and keep treatment quality from gradually drifting.',
+    heroPrimary: 'Discuss your property', heroSecondary: 'View all services', heroAlt: '2Hands professional massage and spa work',
+    imageNote: "A lighter, continuing rhythm of review and recalibration built around the property's needs.",
+    proof: [['Technique meets hospitality', '2Hands approach'], ['25+ years', 'International practice'], ['Hands-on', 'Practical development'], ['Two perspectives', 'Guest and practitioner']],
+    needEyebrow: 'The need', needTitle: 'Consistency is maintained through attention, not intention alone.',
+    needCopy: 'New habits need reinforcement, teams evolve and operational pressure can pull treatments away from the agreed standard. 2Hands provides a practical follow-up structure that keeps management informed and therapists supported.',
+    audienceEyebrow: 'Who it is for', audienceTitle: 'A focused fit for real hospitality needs.',
+    audience: ['Properties completing an assessment or training phase', 'Teams experiencing turnover or rapid growth', 'Spas preparing for a high-demand period', 'Management seeking an external quality partner'],
+    includesEyebrow: 'What it includes', includesTitle: 'Detailed enough to be useful. Focused enough to act on.', includesIntro: 'The final engagement is adapted to the property, the team and the operational question being addressed.',
+    includes: ['Scheduled reassessment', 'Technique and protocol recalibration', 'Remote management check-ins', 'Therapist coaching where appropriate', 'Simple performance scorecards', 'Corrective mini-sessions', 'Priority tracking', 'Final progress summary'],
+    processEyebrow: 'How it works', processTitle: 'A clear path from need to action.',
+    process: [['01', 'Set', 'Agree the standards, measures and follow-up rhythm that matter.'], ['02', 'Review', 'Check progress through observation, discussion and practical reassessment.'], ['03', 'Recalibrate', 'Address drift or new needs with focused support.'], ['04', 'Report', 'Give management a clear view of progress and next priorities.']],
+    deliverEyebrow: 'Management receives', deliverTitle: 'A practical output, not a generic report.',
+    deliverables: ['A defined follow-up rhythm', 'Progress reviews', 'Focused corrective support', 'Management visibility', 'End-of-cycle recommendations'],
+    scopeEyebrow: 'Scope and timing', scopeTitle: 'Built around the brief.', scopeCopy: 'Support may follow another 2Hands engagement or be scoped as a continuing quality partnership. Frequency depends on team stability, priorities and location.', scopeButton: 'Discuss the scope',
+    founderEyebrow: 'Led by Brooke Wescott', founderTitle: 'Experienced hands. Operational perspective.', founderCopy: 'Brooke brings more than 25 years of international massage and bodywork experience, combining treatment expertise with a practical understanding of guest expectations and therapist longevity.', founderLink: 'Meet Brooke',
+    questionsEyebrow: 'Questions', questionsTitle: 'Before we begin.',
+    questions: [['Is support only available after 2Hands training?', 'No. Brooke can first establish a baseline and then recommend an appropriate follow-up structure.'], ['Can part of the support be remote?', 'Yes. Management check-ins and selected coaching can be remote, while hands-on reassessment is planned on site.'], ['How long is an engagement?', 'The rhythm is tailored. It may be a short post-training cycle or a longer partnership with scheduled review points.']],
+    ctaEyebrow: 'Start a conversation', ctaTitle: 'Keep progress visible and standards active.', ctaCopy: 'Discuss the support rhythm that fits your team, operation and quality priorities.', ctaButton: 'Discuss your property',
+  },
+  fr: {
+    metaTitle: 'Accompagnement continu des équipes spa | 2Hands', metaDescription: 'Réévaluation, recalibrage et accompagnement continu des équipes spa avec Brooke Wescott.',
+    heroEyebrow: 'Services hôteliers · Maintenir', heroTitle: 'Protéger les standards après la première intervention.',
+    heroLead: 'L’accompagnement continu aide la direction à consolider les progrès, répondre aux changements d’équipe et éviter que la qualité ne se dilue progressivement.',
+    heroPrimary: 'Parler de votre établissement', heroSecondary: 'Voir tous les services', heroAlt: 'Travail professionnel 2Hands en massage et spa',
+    imageNote: 'Un rythme de suivi et de recalibrage plus léger, construit autour des besoins de l’établissement.',
+    proof: [['Technique et hospitalité', 'L’approche 2Hands'], ['25+ ans', 'Pratique internationale'], ['Pratique', 'Développement concret'], ['Deux regards', 'Client et praticien']],
+    needEyebrow: 'Le besoin', needTitle: 'La régularité se maintient par l’attention, pas seulement par l’intention.',
+    needCopy: 'Les nouvelles habitudes ont besoin d’être renforcées, les équipes évoluent et la pression opérationnelle peut éloigner les soins du standard convenu. 2Hands crée un suivi pratique qui informe la direction et soutient les praticiens.',
+    audienceEyebrow: 'Pour qui', audienceTitle: 'Une réponse ciblée aux besoins réels de l’hospitalité.',
+    audience: ['Un établissement après un diagnostic ou une formation', 'Une équipe en croissance ou avec du turnover', 'Un spa qui prépare une période de forte demande', 'Une direction qui cherche un partenaire qualité externe'],
+    includesEyebrow: 'Ce qui est inclus', includesTitle: 'Assez détaillé pour être utile. Assez ciblé pour agir.', includesIntro: 'L’intervention finale est adaptée à l’établissement, à l’équipe et à la question opérationnelle.',
+    includes: ['Réévaluation planifiée', 'Recalibrage technique et protocolaire', 'Points de suivi à distance avec la direction', 'Coaching des praticiens selon les besoins', 'Grilles de suivi simples', 'Mini-sessions correctives', 'Suivi des priorités', 'Synthèse finale des progrès'],
+    processEyebrow: 'Le déroulement', processTitle: 'Un chemin clair du besoin à l’action.',
+    process: [['01', 'Fixer', 'Définir les standards, les indicateurs et le rythme de suivi.'], ['02', 'Revoir', 'Observer les progrès par l’échange et la réévaluation pratique.'], ['03', 'Recalibrer', 'Corriger les écarts et répondre aux nouveaux besoins.'], ['04', 'Rapporter', 'Donner à la direction une vision claire des progrès et des priorités.']],
+    deliverEyebrow: 'Pour la direction', deliverTitle: 'Un résultat pratique, pas un rapport générique.',
+    deliverables: ['Un rythme de suivi défini', 'Des revues de progression', 'Un soutien correctif ciblé', 'Une visibilité pour la direction', 'Des recommandations de fin de cycle'],
+    scopeEyebrow: 'Périmètre et calendrier', scopeTitle: 'Construit autour du brief.', scopeCopy: 'Le suivi peut prolonger une intervention 2Hands ou être défini comme un partenariat qualité. La fréquence dépend de la stabilité de l’équipe, des priorités et du lieu.', scopeButton: 'Discuter du périmètre',
+    founderEyebrow: 'Avec Brooke Wescott', founderTitle: 'Une expertise pratique et un regard opérationnel.', founderCopy: 'Brooke apporte plus de 25 ans d’expérience internationale en massage et bodywork, avec une compréhension concrète des attentes du client et de la longévité du praticien.', founderLink: 'Découvrir Brooke',
+    questionsEyebrow: 'Questions', questionsTitle: 'Avant de commencer.',
+    questions: [['Le suivi est-il réservé aux équipes déjà formées par 2Hands ?', 'Non. Brooke peut d’abord établir une base puis recommander une structure adaptée.'], ['Une partie peut-elle se faire à distance ?', 'Oui. Les échanges avec la direction et certains coachings peuvent être réalisés à distance, avec des réévaluations pratiques sur site.'], ['Combien de temps dure l’accompagnement ?', 'Le rythme est sur mesure, d’un court suivi après formation à un partenariat plus long.']],
+    ctaEyebrow: 'Commencer l’échange', ctaTitle: 'Gardez les progrès visibles et les standards actifs.', ctaCopy: 'Échangeons sur le rythme de soutien adapté à votre équipe, vos opérations et vos priorités qualité.', ctaButton: 'Parler de votre établissement',
+  },
+};
+
+const copy = (service === 'signature' ? signature : ongoing)[lang];
+const heroImage = service === 'signature' ? treatment : support;
+const enPath = service === 'signature' ? routes.en.signature : routes.en.support;
+const frPath = service === 'signature' ? routes.fr.signature : routes.fr.support;
+---
+
+<BaseLayout title={copy.metaTitle} description={copy.metaDescription} {lang} {enPath} {frPath}>
+  <main id="main-content" class:list={['assessment-page', `${service}-page`]}>
+    <section class="assessment-hero"><div class="container assessment-hero-grid"><div class="assessment-hero-copy"><span class="eyebrow">{copy.heroEyebrow}</span><h1>{copy.heroTitle}</h1><p class="assessment-lead">{copy.heroLead}</p><div class="assessment-hero-actions"><a class="button button-primary" href={r.contact}>{copy.heroPrimary}</a><a class="button button-outline" href={r.services}>{copy.heroSecondary}</a></div></div><figure class="assessment-hero-visual"><Image src={heroImage} alt={copy.heroAlt} widths={[640, 900, 1200]} sizes="(min-width: 900px) 48vw, 100vw" loading="eager" fetchpriority="high" /><figcaption>{copy.imageNote}</figcaption></figure></div></section>
+    <section class="assessment-proof-band"><div class="container assessment-proof-grid">{copy.proof.map(([title, detail]) => <div><strong>{title}</strong><span>{detail}</span></div>)}</div></section>
+    <section class="assessment-section"><div class="container assessment-split"><div><span class="eyebrow">{copy.needEyebrow}</span><h2>{copy.needTitle}</h2></div><div><p class="assessment-large-copy">{copy.needCopy}</p></div></div></section>
+    <section class="assessment-section assessment-soft"><div class="container"><span class="eyebrow">{copy.audienceEyebrow}</span><h2>{copy.audienceTitle}</h2><div class="assessment-card-grid">{copy.audience.map((item, index) => <article><span>0{index + 1}</span><h3>{item}</h3></article>)}</div></div></section>
+    <section class="assessment-section"><div class="container assessment-split"><div><span class="eyebrow">{copy.includesEyebrow}</span><h2>{copy.includesTitle}</h2><p class="assessment-intro">{copy.includesIntro}</p></div><div class="assessment-check-grid">{copy.includes.map((item) => <p>{item}</p>)}</div></div></section>
+    <section class="assessment-section assessment-dark"><div class="container"><span class="eyebrow eyebrow-light">{copy.processEyebrow}</span><h2>{copy.processTitle}</h2><div class="assessment-process-grid">{copy.process.map(([number, title, detail]) => <article><span>{number}</span><h3>{title}</h3><p>{detail}</p></article>)}</div></div></section>
+    <section class="assessment-section assessment-soft"><div class="container assessment-deliverables"><div class="assessment-deliverable-panel"><span class="eyebrow">{copy.deliverEyebrow}</span><h2>{copy.deliverTitle}</h2><ul>{copy.deliverables.map((item) => <li>{item}</li>)}</ul></div><aside class="assessment-scope-panel"><div><span class="eyebrow eyebrow-light">{copy.scopeEyebrow}</span><h2>{copy.scopeTitle}</h2><p>{copy.scopeCopy}</p></div><a class="button button-cream" href={r.contact}>{copy.scopeButton}</a></aside></div></section>
+    <section class="assessment-section"><div class="container assessment-founder-strip"><Image src={portrait} alt="Brooke Wescott" widths={[320, 640]} sizes="(min-width: 900px) 320px, 100vw" loading="lazy" /><div><span class="eyebrow">{copy.founderEyebrow}</span><h2>{copy.founderTitle}</h2><p>{copy.founderCopy}</p></div><a class="text-link" href={r.about}>{copy.founderLink}</a></div></section>
+    <section class="assessment-section assessment-soft"><div class="container assessment-faq"><div><span class="eyebrow">{copy.questionsEyebrow}</span><h2>{copy.questionsTitle}</h2></div><div>{copy.questions.map(([question, answer]) => <article><h3>{question}</h3><p>{answer}</p></article>)}</div></div></section>
+    <section class="assessment-section"><div class="container assessment-cta-panel"><div><span class="eyebrow eyebrow-light">{copy.ctaEyebrow}</span><h2>{copy.ctaTitle}</h2><p>{copy.ctaCopy}</p></div><a class="button button-cream" href={r.contact}>{copy.ctaButton}</a></div></section>
+  </main>
+</BaseLayout>

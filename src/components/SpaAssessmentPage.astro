@@ -1,0 +1,123 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { routes, type Language } from '../data/site';
+import '../styles/spa-assessment.css';
+import treatment from '../assets/images/current-site-photo-4.jpg';
+import portrait from '../assets/images/brooke-portrait.jpeg';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const r = routes[lang];
+const isEnglish = lang === 'en';
+
+const copy = isEnglish ? {
+  metaTitle: 'Spa Team Performance Assessment | 2Hands',
+  metaDescription: 'Practical spa-team assessment for hotels, resorts, riads and spas, covering treatment technique, consistency and guest experience.',
+  heroEyebrow: 'Hospitality services · Assess',
+  heroTitle: 'Understand the treatment your guests actually receive.',
+  heroLead: 'A practical spa-team assessment reveals where technique, consistency and guest experience are already strong, and where focused development will have the greatest impact.',
+  heroPrimary: 'Discuss your property',
+  heroSecondary: 'View all services',
+  heroAlt: '2Hands professional massage and spa work',
+  imageNote: 'Available as an announced review or a discreet guest-perspective assessment, depending on the brief.',
+  proof: [['Technique meets hospitality', '2Hands approach'], ['25+ years', 'International practice'], ['Hands-on', 'Practical development'], ['Two perspectives', 'Guest and practitioner']],
+  needEyebrow: 'The need',
+  needTitle: 'Management needs more than a general impression.',
+  needCopy: 'Guest feedback can reveal that something felt wrong, but rarely explains why. 2Hands examines the treatment itself alongside consultation, pressure, timing, draping, room standards, communication and therapist body mechanics. The result is a useful picture of both individual and team-level patterns.',
+  audienceEyebrow: 'Who it is for',
+  audienceTitle: 'A focused fit for real hospitality needs.',
+  audience: ['A new spa team preparing for opening', 'An established team with uneven treatment consistency', 'A property reviewing standards after guest feedback', 'Management planning targeted training or a menu refresh'],
+  includesEyebrow: 'What it includes',
+  includesTitle: 'Detailed enough to be useful. Focused enough to act on.',
+  includesIntro: 'The final engagement is adapted to the property, the team and the operational question being addressed.',
+  includes: ['Pre-visit management questionnaire', 'Treatment-menu and protocol review', 'On-site observation or mystery treatment', 'Technique, flow, pressure and timing review', 'Consultation, draping and communication review', 'Room preparation and post-care review', 'Management debrief', 'Written priority and training roadmap'],
+  processEyebrow: 'How it works',
+  processTitle: 'A clear path from need to action.',
+  process: [['01', 'Align', 'Clarify the property, team, standards and questions management needs answered.'], ['02', 'Observe', 'Experience and assess the treatment in its real operational context.'], ['03', 'Interpret', 'Separate isolated issues from patterns affecting the wider team.'], ['04', 'Prioritise', 'Translate findings into clear actions for management and development.']],
+  deliverEyebrow: 'Management receives',
+  deliverTitle: 'A practical output, not a generic report.',
+  deliverables: ['A concise management summary', 'Individual and team-level observations', 'Priority actions ranked by impact', 'A recommended training roadmap', 'A confidential debrief with Brooke'],
+  scopeEyebrow: 'Scope and timing',
+  scopeTitle: 'Built around the brief.',
+  scopeCopy: 'Scope is tailored to team size, treatment menu, location and whether the visit is announced or discreet. Final commercial guidance will be confirmed before publication.',
+  scopeButton: 'Discuss the scope',
+  founderEyebrow: 'Led by Brooke Wescott',
+  founderTitle: 'Experienced hands. Operational perspective.',
+  founderCopy: 'Brooke brings more than 25 years of international massage and bodywork experience, combining treatment expertise with a practical understanding of guest expectations and therapist longevity.',
+  founderLink: 'Meet Brooke',
+  questionsEyebrow: 'Questions',
+  questionsTitle: 'Before we begin.',
+  questions: [['Is this a punitive inspection?', 'No. The purpose is to create an accurate, constructive baseline and help the team improve without undermining confidence.'], ['Can the assessment be announced?', 'Yes. Brooke can work openly with the team or from the guest perspective. The right format depends on the question management wants answered.'], ['Does assessment include training?', 'The assessment identifies priorities. Focused training can follow as a separate engagement or be planned as the next phase.']],
+  ctaEyebrow: 'Start a conversation',
+  ctaTitle: 'Start with a clearer view of your spa team.',
+  ctaCopy: 'Share your property, team size and current priorities. Brooke will recommend an appropriate assessment format.',
+  ctaButton: 'Discuss your property',
+} : {
+  metaTitle: 'Diagnostic de performance de l’équipe spa | 2Hands',
+  metaDescription: 'Diagnostic pratique des équipes spa pour les hôtels, resorts, riads et spas, couvrant la technique, la régularité et l’expérience client.',
+  heroEyebrow: 'Services hôteliers · Évaluer',
+  heroTitle: 'Comprendre le soin que vos clients reçoivent réellement.',
+  heroLead: 'Un diagnostic pratique de l’équipe spa révèle les points forts, les écarts de régularité et les axes de développement qui auront le plus d’impact.',
+  heroPrimary: 'Parler de votre établissement',
+  heroSecondary: 'Voir tous les services',
+  heroAlt: 'Travail professionnel 2Hands en massage et spa',
+  imageNote: 'Le diagnostic peut être annoncé ou réalisé discrètement du point de vue client, selon les besoins de l’établissement.',
+  proof: [['Technique et hospitalité', 'L’approche 2Hands'], ['25+ ans', 'Pratique internationale'], ['Pratique', 'Développement concret'], ['Deux regards', 'Client et praticien']],
+  needEyebrow: 'Le besoin',
+  needTitle: 'La direction a besoin de plus qu’une impression générale.',
+  needCopy: 'Les commentaires clients indiquent parfois qu’un soin n’a pas répondu aux attentes, sans expliquer pourquoi. 2Hands examine le soin lui-même ainsi que l’accueil, la pression, le rythme, le drapage, la préparation de la cabine, la communication et la mécanique corporelle du praticien.',
+  audienceEyebrow: 'Pour qui',
+  audienceTitle: 'Une réponse ciblée aux besoins réels de l’hospitalité.',
+  audience: ['Une nouvelle équipe spa en préparation d’ouverture', 'Une équipe installée dont la qualité varie d’un praticien à l’autre', 'Un établissement qui réagit à des retours clients', 'Une direction qui prépare une formation ciblée ou une évolution de la carte'],
+  includesEyebrow: 'Ce qui est inclus',
+  includesTitle: 'Assez détaillé pour être utile. Assez ciblé pour agir.',
+  includesIntro: 'L’intervention finale est adaptée à l’établissement, à l’équipe et à la question opérationnelle.',
+  includes: ['Questionnaire préalable avec la direction', 'Analyse de la carte et des protocoles', 'Observation sur site ou soin mystère', 'Évaluation de la technique, du rythme et de la pression', 'Accueil, drapage et communication', 'Préparation de la cabine et fin de soin', 'Débriefing avec la direction', 'Plan de priorités et feuille de route formation'],
+  processEyebrow: 'Le déroulement',
+  processTitle: 'Un chemin clair du besoin à l’action.',
+  process: [['01', 'Cadrer', 'Clarifier l’établissement, l’équipe, les standards et les questions à résoudre.'], ['02', 'Observer', 'Vivre et évaluer le soin dans son contexte opérationnel réel.'], ['03', 'Interpréter', 'Distinguer les cas isolés des tendances qui concernent l’ensemble de l’équipe.'], ['04', 'Prioriser', 'Transformer les constats en actions claires pour la direction et l’équipe.']],
+  deliverEyebrow: 'Pour la direction',
+  deliverTitle: 'Un résultat pratique, pas un rapport générique.',
+  deliverables: ['Une synthèse claire pour la direction', 'Des observations individuelles et collectives', 'Des actions classées par priorité', 'Une feuille de route de formation', 'Un débriefing confidentiel avec Brooke'],
+  scopeEyebrow: 'Périmètre et calendrier',
+  scopeTitle: 'Construit autour du brief.',
+  scopeCopy: 'Le périmètre dépend de la taille de l’équipe, de la carte de soins, du lieu et du format annoncé ou discret. Les conditions commerciales finales seront confirmées avant publication.',
+  scopeButton: 'Discuter du périmètre',
+  founderEyebrow: 'Avec Brooke Wescott',
+  founderTitle: 'Une expertise pratique et un regard opérationnel.',
+  founderCopy: 'Brooke apporte plus de 25 ans d’expérience internationale en massage et bodywork, avec une compréhension concrète des attentes du client et de la longévité du praticien.',
+  founderLink: 'Découvrir Brooke',
+  questionsEyebrow: 'Questions',
+  questionsTitle: 'Avant de commencer.',
+  questions: [['S’agit-il d’une inspection punitive ?', 'Non. Le diagnostic crée une base précise et constructive pour aider l’équipe à progresser sans fragiliser sa confiance.'], ['Le diagnostic peut-il être annoncé ?', 'Oui. Brooke peut intervenir ouvertement auprès de l’équipe ou adopter le point de vue d’un client. Le format dépend de la question à résoudre.'], ['La formation est-elle incluse ?', 'Le diagnostic identifie les priorités. Une formation ciblée peut ensuite être organisée comme phase distincte.']],
+  ctaEyebrow: 'Commencer l’échange',
+  ctaTitle: 'Commencez par une vision plus claire de votre équipe spa.',
+  ctaCopy: 'Présentez votre établissement, la taille de l’équipe et vos priorités. Brooke recommandera le format de diagnostic le plus pertinent.',
+  ctaButton: 'Parler de votre établissement',
+};
+---
+
+<BaseLayout title={copy.metaTitle} description={copy.metaDescription} {lang} enPath={routes.en.assessment} frPath={routes.fr.assessment}>
+  <main id="main-content" class="assessment-page">
+    <section class="assessment-hero"><div class="container assessment-hero-grid"><div class="assessment-hero-copy"><span class="eyebrow">{copy.heroEyebrow}</span><h1>{copy.heroTitle}</h1><p class="assessment-lead">{copy.heroLead}</p><div class="assessment-hero-actions"><a class="button button-primary" href={r.contact}>{copy.heroPrimary}</a><a class="button button-outline" href={r.services}>{copy.heroSecondary}</a></div></div><figure class="assessment-hero-visual"><Image src={treatment} alt={copy.heroAlt} widths={[640, 900, 1200]} sizes="(min-width: 900px) 48vw, 100vw" loading="eager" fetchpriority="high" /><figcaption>{copy.imageNote}</figcaption></figure></div></section>
+
+    <section class="assessment-proof-band"><div class="container assessment-proof-grid">{copy.proof.map(([title, detail]) => <div><strong>{title}</strong><span>{detail}</span></div>)}</div></section>
+
+    <section class="assessment-section"><div class="container assessment-split"><div><span class="eyebrow">{copy.needEyebrow}</span><h2>{copy.needTitle}</h2></div><div><p class="assessment-large-copy">{copy.needCopy}</p></div></div></section>
+
+    <section class="assessment-section assessment-soft"><div class="container"><span class="eyebrow">{copy.audienceEyebrow}</span><h2>{copy.audienceTitle}</h2><div class="assessment-card-grid">{copy.audience.map((item, index) => <article><span>0{index + 1}</span><h3>{item}</h3></article>)}</div></div></section>
+
+    <section class="assessment-section"><div class="container assessment-split"><div><span class="eyebrow">{copy.includesEyebrow}</span><h2>{copy.includesTitle}</h2><p class="assessment-intro">{copy.includesIntro}</p></div><div class="assessment-check-grid">{copy.includes.map((item) => <p>{item}</p>)}</div></div></section>
+
+    <section class="assessment-section assessment-dark"><div class="container"><span class="eyebrow eyebrow-light">{copy.processEyebrow}</span><h2>{copy.processTitle}</h2><div class="assessment-process-grid">{copy.process.map(([number, title, detail]) => <article><span>{number}</span><h3>{title}</h3><p>{detail}</p></article>)}</div></div></section>
+
+    <section class="assessment-section assessment-soft"><div class="container assessment-deliverables"><div class="assessment-deliverable-panel"><span class="eyebrow">{copy.deliverEyebrow}</span><h2>{copy.deliverTitle}</h2><ul>{copy.deliverables.map((item) => <li>{item}</li>)}</ul></div><aside class="assessment-scope-panel"><div><span class="eyebrow eyebrow-light">{copy.scopeEyebrow}</span><h2>{copy.scopeTitle}</h2><p>{copy.scopeCopy}</p></div><a class="button button-cream" href={r.contact}>{copy.scopeButton}</a></aside></div></section>
+
+    <section class="assessment-section"><div class="container assessment-founder-strip"><Image src={portrait} alt="Brooke Wescott" widths={[320, 640]} sizes="(min-width: 900px) 320px, 100vw" loading="lazy" /><div><span class="eyebrow">{copy.founderEyebrow}</span><h2>{copy.founderTitle}</h2><p>{copy.founderCopy}</p></div><a class="text-link" href={r.about}>{copy.founderLink}</a></div></section>
+
+    <section class="assessment-section assessment-soft"><div class="container assessment-faq"><div><span class="eyebrow">{copy.questionsEyebrow}</span><h2>{copy.questionsTitle}</h2></div><div>{copy.questions.map(([question, answer]) => <article><h3>{question}</h3><p>{answer}</p></article>)}</div></div></section>
+
+    <section class="assessment-section"><div class="container assessment-cta-panel"><div><span class="eyebrow eyebrow-light">{copy.ctaEyebrow}</span><h2>{copy.ctaTitle}</h2><p>{copy.ctaCopy}</p></div><a class="button button-cream" href={r.contact}>{copy.ctaButton}</a></div></section>
+  </main>
+</BaseLayout>

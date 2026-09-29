@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { routes, type Language } from '../data/site';
+import '../styles/spa-assessment.css';
+import '../styles/content-pages.css';
+import treatment from '../assets/images/current-site-photo-4.jpg';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const r = routes[lang];
+const isEnglish = lang === 'en';
+
+const copy = isEnglish ? {
+  metaTitle: 'References | 2Hands', metaDescription: 'Selected hospitality and wellness experience from Brooke Wescott and 2Hands.',
+  heroEyebrow: 'Selected experience', heroTitle: 'Experience built through real people, teams and treatment environments.',
+  heroLead: '2Hands brings together work across private practice, luxury hospitality, professional education and international clientele. This page will grow into a verified record of selected collaborations and outcomes.',
+  primary: 'Discuss a similar project', secondary: 'Explore services', imageAlt: '2Hands professional massage and spa work', imageNote: 'Client names shown in this prototype are based on information supplied by Brooke. Final logo use and project wording require approval.',
+  organisationsEyebrow: 'Selected organisations', organisationsTitle: 'Hospitality and wellness experience.', organisationsNote: 'Text references are used for design review while publication permission and official logo files are being confirmed.',
+  breadthEyebrow: 'Relevant breadth', breadthTitle: 'One practice, several professional contexts.', breadthCopy: "Brooke's experience spans hands-on treatment, therapist education, spa-team development and work with international clientele. This breadth helps her connect technique with the standards and realities of hospitality.",
+  storiesEyebrow: 'Project stories', storiesTitle: 'Case studies will be added with client approval.',
+  stories: [['Assessment', 'Understanding current treatment quality', 'A future case study location for the brief, observation, priorities and management outcome.'], ['Team development', 'Creating greater consistency', "A future case study location for the team's starting point, training focus and progress."], ['Signature experience', 'Building a distinctive protocol', 'A future case study location for concept development, therapist transfer and refinement.']],
+  evidenceEyebrow: 'Evidence in progress', evidenceTitle: 'What will be added next.',
+  evidence: [['Approved testimonials', "Short client statements with the person's name, role, organisation and permission to publish."], ['Verified project context', 'The service delivered, the challenge addressed and the outcome that can be stated accurately.'], ['Official brand assets', 'Current logos supplied or approved by each organisation before production launch.']],
+  ctaEyebrow: 'Your property', ctaTitle: 'Have a similar challenge?', ctaCopy: 'Share the property, team and result you want to create. Brooke will help identify the right starting point.', ctaButton: 'Discuss your project',
+} : {
+  metaTitle: 'Références | 2Hands', metaDescription: 'Expériences hôtelières et wellness sélectionnées de Brooke Wescott et 2Hands.',
+  heroEyebrow: 'Expériences sélectionnées', heroTitle: 'Une expérience construite auprès de personnes, d’équipes et d’environnements de soin réels.',
+  heroLead: '2Hands réunit une expérience en pratique privée, hôtellerie de luxe, formation professionnelle et clientèle internationale. Cette page deviendra progressivement un historique vérifié de collaborations et de résultats.',
+  primary: 'Discuter d’un projet similaire', secondary: 'Explorer les services', imageAlt: 'Travail professionnel 2Hands en massage et spa', imageNote: 'Les noms présentés reposent sur les informations fournies par Brooke. L’utilisation finale des logos et le descriptif des projets restent à approuver.',
+  organisationsEyebrow: 'Organisations sélectionnées', organisationsTitle: 'Expérience hôtelière et wellness.', organisationsNote: 'Des références textuelles sont utilisées pendant la validation des autorisations et des fichiers logo officiels.',
+  breadthEyebrow: 'Une expérience plurielle', breadthTitle: 'Une pratique, plusieurs contextes professionnels.', breadthCopy: 'L’expérience de Brooke couvre le soin, la formation des praticiens, le développement des équipes spa et le travail avec une clientèle internationale.',
+  storiesEyebrow: 'Histoires de projets', storiesTitle: 'Les études de cas seront ajoutées avec l’accord des clients.',
+  stories: [['Diagnostic', 'Comprendre la qualité actuelle', 'Emplacement futur pour le brief, les observations, les priorités et le résultat.'], ['Équipe', 'Créer plus de régularité', 'Emplacement futur pour le point de départ, la formation et les progrès.'], ['Signature', 'Construire un protocole distinctif', 'Emplacement futur pour le concept, la transmission et l’ajustement.']],
+  evidenceEyebrow: '', evidenceTitle: '', evidence: [],
+  ctaEyebrow: 'Votre établissement', ctaTitle: 'Vous rencontrez un défi similaire ?', ctaCopy: 'Présentez l’établissement, l’équipe et le résultat recherché. Brooke vous aidera à identifier le bon point de départ.', ctaButton: 'Discuter du projet',
+};
+
+const organisations = ['Four Seasons|Hotel Casablanca', 'Anfa Cliff', 'Nisaē', 'Endorfine', 'My Shala', 'Matrescence'];
+---
+
+<BaseLayout title={copy.metaTitle} description={copy.metaDescription} {lang} enPath={routes.en.references} frPath={routes.fr.references}>
+  <main id="main-content" class="assessment-page reference-page">
+    <section class="assessment-hero"><div class="container assessment-hero-grid"><div class="assessment-hero-copy"><span class="eyebrow">{copy.heroEyebrow}</span><h1>{copy.heroTitle}</h1><p class="assessment-lead">{copy.heroLead}</p><div class="assessment-hero-actions"><a class="button button-primary" href={r.contact}>{copy.primary}</a><a class="button button-outline" href={r.services}>{copy.secondary}</a></div></div><figure class="assessment-hero-visual"><Image src={treatment} alt={copy.imageAlt} widths={[640, 900, 1200]} sizes="(min-width: 900px) 48vw, 100vw" loading="eager" fetchpriority="high" /><figcaption>{copy.imageNote}</figcaption></figure></div></section>
+    <section class="assessment-section assessment-soft"><div class="container"><span class="eyebrow">{copy.organisationsEyebrow}</span><h2>{copy.organisationsTitle}</h2><div class="reference-logo-grid">{organisations.map((name) => <div>{name.split('|').map((line, index) => <>{index > 0 && <br />}{line}</>)}</div>)}</div><p class="reference-note">{copy.organisationsNote}</p></div></section>
+    <section class="assessment-section"><div class="container assessment-split"><div><span class="eyebrow">{copy.breadthEyebrow}</span><h2>{copy.breadthTitle}</h2></div><div><p class="assessment-large-copy">{copy.breadthCopy}</p></div></div></section>
+    <section class="assessment-section assessment-dark"><div class="container"><span class="eyebrow eyebrow-light">{copy.storiesEyebrow}</span><h2>{copy.storiesTitle}</h2><div class="reference-story-grid">{copy.stories.map(([label, title, detail]) => <article><small>{label}</small><h3>{title}</h3><p>{detail}</p></article>)}</div></div></section>
+    {copy.evidence.length > 0 && <section class="assessment-section assessment-soft"><div class="container assessment-faq"><div><span class="eyebrow">{copy.evidenceEyebrow}</span><h2>{copy.evidenceTitle}</h2></div><div>{copy.evidence.map(([title, detail]) => <article><h3>{title}</h3><p>{detail}</p></article>)}</div></div></section>}
+    <section class="assessment-section"><div class="container assessment-cta-panel"><div><span class="eyebrow eyebrow-light">{copy.ctaEyebrow}</span><h2>{copy.ctaTitle}</h2><p>{copy.ctaCopy}</p></div><a class="button button-cream" href={r.contact}>{copy.ctaButton}</a></div></section>
+  </main>
+</BaseLayout>

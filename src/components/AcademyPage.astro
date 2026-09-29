@@ -1,0 +1,48 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { routes, type Language } from '../data/site';
+import '../styles/spa-assessment.css';
+import '../styles/content-pages.css';
+import teaching from '../assets/images/brooke-teaching-landscape.webp';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const r = routes[lang];
+const isEnglish = lang === 'en';
+
+const copy = isEnglish ? {
+  metaTitle: '2Hands Academy | Massage Training', metaDescription: 'Hands-on massage training for beginners, practitioners and professionals with Brooke Wescott.',
+  heroTitle: 'Build a massage practice that is skilled, thoughtful and sustainable.', heroLead: 'Learning pathways for beginners, practising therapists and professionals who want to strengthen technique, confidence and the quality of their work.', primary: 'Enquire about training', secondary: 'Meet Brooke', imageAlt: 'Brooke Wescott leading practical massage training', imageNote: 'Training is practical and technique-focused, with attention to the person receiving the treatment and the body of the practitioner delivering it.',
+  proof: [['Hands-on learning', 'Practice with purpose'], ['Technique', 'Clear foundations'], ['Confidence', 'Useful feedback'], ['Longevity', 'Sustainable practice']],
+  pathwaysEyebrow: 'Find your pathway', pathwaysTitle: 'Training shaped around where you are now.',
+  pathways: [['01 · Beginner', 'Learn strong foundations', 'For people beginning massage and seeking a clear, practical introduction to touch, structure and safe working habits.', 'Ask about beginner training'], ['02 · Practitioner', 'Refine technique and flow', 'For practising therapists who want greater precision, confidence, adaptability and consistency in their treatments.', 'Ask about practitioner training'], ['03 · Professional', 'Develop a focused skill', 'For experienced professionals seeking targeted development, feedback or a deeper approach to treatment quality.', 'Discuss your goal']],
+  teachingEyebrow: 'How Brooke teaches', teachingTitle: 'Technique is learned through attention and practice.', teachingCopy: 'Brooke combines demonstration, guided practice, observation and direct feedback. The aim is not to copy a sequence mechanically, but to understand how skilled touch, body mechanics, communication and clinical attention work together.',
+  learningEyebrow: 'The learning experience', learningTitle: 'Practical from the beginning.',
+  learning: [['01', 'Understand', 'Build the reasoning behind the technique and treatment intention.'], ['02', 'Observe', 'See the details of position, contact, pressure and movement.'], ['03', 'Practise', 'Apply the work with guidance, repetition and correction.'], ['04', 'Integrate', 'Leave with clear priorities for continued independent practice.']],
+  detailsEyebrow: 'Course details', detailsTitle: 'What we still need to confirm.',
+  details: [['Current dates and locations', 'The final calendar, venues and delivery format will be published after confirmation with Brooke.'], ['Prerequisites and certification', 'Each course page will clearly state the required experience and the exact recognition provided.'], ['Fees and availability', 'Pricing and place availability will appear with each confirmed programme. Enquiries remain separate from hospitality projects.']],
+  ctaEyebrow: 'Individual training enquiry', ctaTitle: 'Tell us about your experience and what you want to learn.', ctaCopy: 'Use the learner route so Brooke can guide you toward the most appropriate future programme.', ctaButton: 'Enquire about training',
+} : {
+  metaTitle: '2Hands Academy | Formations massage', metaDescription: 'Formations pratiques en massage avec Brooke Wescott pour débutants, praticiens et professionnels.',
+  heroTitle: 'Construire une pratique du massage précise, réfléchie et durable.', heroLead: 'Des parcours pour débutants, praticiens et professionnels qui souhaitent renforcer leur technique, leur confiance et la qualité de leur travail.', primary: 'Se renseigner sur les formations', secondary: 'Découvrir Brooke', imageAlt: 'Brooke Wescott anime une formation pratique en massage', imageNote: 'La formation est pratique et centrée sur la technique, avec une attention portée à la personne qui reçoit le soin et au corps du praticien.',
+  proof: [['Apprentissage pratique', 'Pratiquer avec intention'], ['Technique', 'Des bases claires'], ['Confiance', 'Des retours utiles'], ['Longévité', 'Une pratique durable']],
+  pathwaysEyebrow: 'Trouver votre parcours', pathwaysTitle: 'Une formation adaptée à votre niveau actuel.',
+  pathways: [['01 · Débutant', 'Apprendre de bonnes bases', 'Pour découvrir le massage avec une introduction claire au toucher, à la structure et aux habitudes de travail sûres.', 'Se renseigner'], ['02 · Praticien', 'Affiner la technique et la fluidité', 'Pour gagner en précision, en confiance, en adaptabilité et en régularité.', 'Se renseigner'], ['03 · Professionnel', 'Développer une compétence ciblée', 'Pour approfondir une technique, recevoir des retours ou renforcer la qualité du soin.', 'Discuter de votre objectif']],
+  teachingEyebrow: 'La pédagogie de Brooke', teachingTitle: 'La technique s’apprend par l’attention et la pratique.', teachingCopy: 'Brooke associe démonstration, pratique guidée, observation et retours directs. L’objectif est de comprendre comment le toucher, la mécanique corporelle, la communication et l’attention travaillent ensemble.',
+  learningEyebrow: '', learningTitle: '', learning: [], detailsEyebrow: '', detailsTitle: '', details: [],
+  ctaEyebrow: 'Demande individuelle', ctaTitle: 'Parlez-nous de votre expérience et de ce que vous souhaitez apprendre.', ctaCopy: 'Utilisez le parcours apprenant afin que Brooke puisse vous orienter vers le programme le plus pertinent.', ctaButton: 'Se renseigner',
+};
+---
+
+<BaseLayout title={copy.metaTitle} description={copy.metaDescription} {lang} enPath={routes.en.academy} frPath={routes.fr.academy}>
+  <main id="main-content" class="assessment-page academy-page">
+    <section class="assessment-hero"><div class="container assessment-hero-grid"><div class="assessment-hero-copy"><span class="eyebrow">2Hands Academy</span><h1>{copy.heroTitle}</h1><p class="assessment-lead">{copy.heroLead}</p><div class="assessment-hero-actions"><a class="button button-primary" href={`${r.contact}#academy-enquiry`}>{copy.primary}</a><a class="button button-outline" href={r.about}>{copy.secondary}</a></div></div><figure class="assessment-hero-visual"><Image src={teaching} alt={copy.imageAlt} widths={[640, 900, 1200]} sizes="(min-width: 900px) 48vw, 100vw" loading="eager" fetchpriority="high" /><figcaption>{copy.imageNote}</figcaption></figure></div></section>
+    <section class="assessment-proof-band"><div class="container assessment-proof-grid">{copy.proof.map(([title, detail]) => <div><strong>{title}</strong><span>{detail}</span></div>)}</div></section>
+    <section class="assessment-section assessment-soft"><div class="container"><span class="eyebrow">{copy.pathwaysEyebrow}</span><h2>{copy.pathwaysTitle}</h2><div class="academy-route-grid">{copy.pathways.map(([label, title, detail, link]) => <article><span>{label}</span><h3>{title}</h3><p>{detail}</p><a class="text-link" href={`${r.contact}#academy-enquiry`}>{link}</a></article>)}</div></div></section>
+    <section class="assessment-section"><div class="container assessment-split"><div><span class="eyebrow">{copy.teachingEyebrow}</span><h2>{copy.teachingTitle}</h2></div><div><p class="assessment-large-copy">{copy.teachingCopy}</p></div></div></section>
+    {copy.learning.length > 0 && <section class="assessment-section assessment-dark"><div class="container"><span class="eyebrow eyebrow-light">{copy.learningEyebrow}</span><h2>{copy.learningTitle}</h2><div class="assessment-process-grid">{copy.learning.map(([number, title, detail]) => <article><span>{number}</span><h3>{title}</h3><p>{detail}</p></article>)}</div></div></section>}
+    {copy.details.length > 0 && <section class="assessment-section assessment-soft"><div class="container assessment-faq"><div><span class="eyebrow">{copy.detailsEyebrow}</span><h2>{copy.detailsTitle}</h2></div><div>{copy.details.map(([title, detail]) => <article><h3>{title}</h3><p>{detail}</p></article>)}</div></div></section>}
+    <section class="assessment-section"><div class="container assessment-cta-panel"><div><span class="eyebrow eyebrow-light">{copy.ctaEyebrow}</span><h2>{copy.ctaTitle}</h2><p>{copy.ctaCopy}</p></div><a class="button button-cream" href={`${r.contact}#academy-enquiry`}>{copy.ctaButton}</a></div></section>
+  </main>
+</BaseLayout>

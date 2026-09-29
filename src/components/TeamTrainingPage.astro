@@ -1,0 +1,123 @@
+---
+import { Image } from 'astro:assets';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { routes, type Language } from '../data/site';
+import '../styles/spa-assessment.css';
+import teaching from '../assets/images/brooke-teaching-landscape.webp';
+import portrait from '../assets/images/brooke-portrait.jpeg';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const r = routes[lang];
+const isEnglish = lang === 'en';
+
+const copy = isEnglish ? {
+  metaTitle: 'Hotel Spa Team Training | 2Hands',
+  metaDescription: 'Targeted on-site massage and spa team training with Brooke Wescott, shaped around real operational needs and hospitality standards.',
+  heroEyebrow: 'Hospitality services · Strengthen',
+  heroTitle: 'Develop the team around the standards that matter most.',
+  heroLead: 'Targeted on-site training turns real operational needs into practical development that therapists can understand, apply and sustain.',
+  heroPrimary: 'Discuss your property',
+  heroSecondary: 'View all services',
+  heroAlt: 'Brooke Wescott delivering practical massage training',
+  imageNote: 'Technique-focused development shaped around the people, protocols and guest experience already in place.',
+  proof: [['Technique meets hospitality', '2Hands approach'], ['25+ years', 'International practice'], ['Hands-on', 'Practical development'], ['Two perspectives', 'Guest and practitioner']],
+  needEyebrow: 'The need',
+  needTitle: 'Generic training rarely solves a specific performance gap.',
+  needCopy: 'Every spa team has different strengths, habits and pressures. 2Hands designs focused sessions around observed needs, management priorities and the treatment menu, balancing technical precision with therapist confidence and sustainable body mechanics.',
+  audienceEyebrow: 'Who it is for',
+  audienceTitle: 'A focused fit for real hospitality needs.',
+  audience: ['Teams acting on assessment findings', 'Properties introducing or refreshing standards', 'Therapists needing greater consistency across core treatments', 'Managers preparing a team for opening or seasonal demand'],
+  includesEyebrow: 'What it includes',
+  includesTitle: 'Detailed enough to be useful. Focused enough to act on.',
+  includesIntro: 'The final engagement is adapted to the property, the team and the operational question being addressed.',
+  includes: ['Treatment flow and transitions', 'Timing and rhythm', 'Pressure adaptation', 'Guest consultation and communication', 'Draping, hygiene and room standards', 'Consistency across therapists', 'Body mechanics and practitioner longevity', 'Practical assessment and individual feedback'],
+  processEyebrow: 'How it works',
+  processTitle: 'A clear path from need to action.',
+  process: [['01', 'Define', 'Agree the skills, standards and operational priorities for the engagement.'], ['02', 'Design', 'Shape a focused programme for the team, schedule and treatment menu.'], ['03', 'Practise', 'Work hands-on with demonstration, guided practice and useful feedback.'], ['04', 'Embed', 'Give management and therapists clear actions to reinforce after training.']],
+  deliverEyebrow: 'Management receives',
+  deliverTitle: 'A practical output, not a generic report.',
+  deliverables: ['A tailored training plan', 'On-site practical instruction', 'Individual technique feedback', 'Team consistency priorities', 'Post-training recommendations'],
+  scopeEyebrow: 'Scope and timing',
+  scopeTitle: 'Built around the brief.',
+  scopeCopy: 'Programme length depends on team size, the number of treatment skills involved and the depth of assessment required. Dates and delivery format are agreed around operations.',
+  scopeButton: 'Discuss the scope',
+  founderEyebrow: 'Led by Brooke Wescott',
+  founderTitle: 'Experienced hands. Operational perspective.',
+  founderCopy: 'Brooke brings more than 25 years of international massage and bodywork experience, combining treatment expertise with a practical understanding of guest expectations and therapist longevity.',
+  founderLink: 'Meet Brooke',
+  questionsEyebrow: 'Questions',
+  questionsTitle: 'Before we begin.',
+  questions: [['Can training be delivered without an assessment?', 'Yes. If management already understands the need, training can begin from a clear brief. A focused review may still be used at the start.'], ['Is this suitable for mixed-experience teams?', 'Yes. Sessions can combine shared standards with individual feedback so that therapists develop from their current level.'], ['Will the spa need to close?', 'Not necessarily. Scheduling can be planned in groups or phases to reduce disruption to operations.']],
+  ctaEyebrow: 'Start a conversation',
+  ctaTitle: 'Tell us what your team needs to strengthen.',
+  ctaCopy: 'Share the team size, priority skills and preferred timing. Brooke will shape a practical training direction.',
+  ctaButton: 'Discuss your property',
+} : {
+  metaTitle: 'Formation des équipes spa hôtelières | 2Hands',
+  metaDescription: 'Formation pratique sur site des équipes massage et spa avec Brooke Wescott, adaptée aux besoins opérationnels et aux standards hôteliers.',
+  heroEyebrow: 'Services hôteliers · Renforcer',
+  heroTitle: 'Développer l’équipe autour des standards qui comptent vraiment.',
+  heroLead: 'Une formation ciblée sur site transforme les besoins opérationnels en apprentissages pratiques que les praticiens peuvent comprendre, appliquer et maintenir.',
+  heroPrimary: 'Parler de votre établissement',
+  heroSecondary: 'Voir tous les services',
+  heroAlt: 'Brooke Wescott animant une formation pratique en massage',
+  imageNote: 'Un développement centré sur la technique, adapté aux personnes, aux protocoles et à l’expérience client déjà en place.',
+  proof: [['Technique et hospitalité', 'L’approche 2Hands'], ['25+ ans', 'Pratique internationale'], ['Pratique', 'Développement concret'], ['Deux regards', 'Client et praticien']],
+  needEyebrow: 'Le besoin',
+  needTitle: 'Une formation générique résout rarement un besoin précis.',
+  needCopy: 'Chaque équipe possède ses forces, ses habitudes et ses contraintes. 2Hands construit des sessions ciblées à partir des besoins observés, des priorités de la direction et de la carte de soins, en conciliant précision technique, confiance et mécanique corporelle durable.',
+  audienceEyebrow: 'Pour qui',
+  audienceTitle: 'Une réponse ciblée aux besoins réels de l’hospitalité.',
+  audience: ['Une équipe qui agit après un diagnostic', 'Un établissement qui introduit ou actualise ses standards', 'Des praticiens qui doivent gagner en régularité', 'Une direction qui prépare une ouverture ou une période intense'],
+  includesEyebrow: 'Ce qui est inclus',
+  includesTitle: 'Assez détaillé pour être utile. Assez ciblé pour agir.',
+  includesIntro: 'L’intervention finale est adaptée à l’établissement, à l’équipe et à la question opérationnelle.',
+  includes: ['Fluidité du soin et transitions', 'Rythme et gestion du temps', 'Adaptation de la pression', 'Accueil et communication client', 'Drapage, hygiène et standards cabine', 'Régularité entre praticiens', 'Mécanique corporelle et longévité', 'Évaluation pratique et retours individuels'],
+  processEyebrow: 'Le déroulement',
+  processTitle: 'Un chemin clair du besoin à l’action.',
+  process: [['01', 'Définir', 'Aligner les compétences, les standards et les priorités opérationnelles.'], ['02', 'Concevoir', 'Créer un programme adapté à l’équipe, au planning et à la carte.'], ['03', 'Pratiquer', 'Travailler par la démonstration, la pratique guidée et des retours utiles.'], ['04', 'Ancrer', 'Donner à l’équipe des actions claires à renforcer après la formation.']],
+  deliverEyebrow: 'Pour la direction',
+  deliverTitle: 'Un résultat pratique, pas un rapport générique.',
+  deliverables: ['Un plan de formation sur mesure', 'Un enseignement pratique sur site', 'Des retours techniques individuels', 'Des priorités collectives', 'Des recommandations après formation'],
+  scopeEyebrow: 'Périmètre et calendrier',
+  scopeTitle: 'Construit autour du brief.',
+  scopeCopy: 'La durée dépend de la taille de l’équipe, du nombre de compétences concernées et de la profondeur de l’évaluation nécessaire. Le calendrier s’adapte aux opérations.',
+  scopeButton: 'Discuter du périmètre',
+  founderEyebrow: 'Avec Brooke Wescott',
+  founderTitle: 'Une expertise pratique et un regard opérationnel.',
+  founderCopy: 'Brooke apporte plus de 25 ans d’expérience internationale en massage et bodywork, avec une compréhension concrète des attentes du client et de la longévité du praticien.',
+  founderLink: 'Découvrir Brooke',
+  questionsEyebrow: 'Questions',
+  questionsTitle: 'Avant de commencer.',
+  questions: [['La formation peut-elle avoir lieu sans diagnostic ?', 'Oui. Si la direction connaît déjà le besoin, la formation peut commencer à partir d’un brief clair.'], ['Convient-elle à une équipe de niveaux différents ?', 'Oui. Les standards communs peuvent être associés à des retours individuels adaptés au niveau de chacun.'], ['Le spa doit-il fermer ?', 'Pas nécessairement. Les sessions peuvent être organisées par groupes ou par phases afin de limiter l’impact opérationnel.']],
+  ctaEyebrow: 'Commencer l’échange',
+  ctaTitle: 'Dites-nous ce que votre équipe doit renforcer.',
+  ctaCopy: 'Indiquez la taille de l’équipe, les compétences prioritaires et la période souhaitée. Brooke proposera une direction pratique.',
+  ctaButton: 'Parler de votre établissement',
+};
+---
+
+<BaseLayout title={copy.metaTitle} description={copy.metaDescription} {lang} enPath={routes.en.training} frPath={routes.fr.training}>
+  <main id="main-content" class="assessment-page training-page">
+    <section class="assessment-hero"><div class="container assessment-hero-grid"><div class="assessment-hero-copy"><span class="eyebrow">{copy.heroEyebrow}</span><h1>{copy.heroTitle}</h1><p class="assessment-lead">{copy.heroLead}</p><div class="assessment-hero-actions"><a class="button button-primary" href={r.contact}>{copy.heroPrimary}</a><a class="button button-outline" href={r.services}>{copy.heroSecondary}</a></div></div><figure class="assessment-hero-visual"><Image src={teaching} alt={copy.heroAlt} widths={[640, 900, 1200]} sizes="(min-width: 900px) 48vw, 100vw" loading="eager" fetchpriority="high" /><figcaption>{copy.imageNote}</figcaption></figure></div></section>
+
+    <section class="assessment-proof-band"><div class="container assessment-proof-grid">{copy.proof.map(([title, detail]) => <div><strong>{title}</strong><span>{detail}</span></div>)}</div></section>
+
+    <section class="assessment-section"><div class="container assessment-split"><div><span class="eyebrow">{copy.needEyebrow}</span><h2>{copy.needTitle}</h2></div><div><p class="assessment-large-copy">{copy.needCopy}</p></div></div></section>
+
+    <section class="assessment-section assessment-soft"><div class="container"><span class="eyebrow">{copy.audienceEyebrow}</span><h2>{copy.audienceTitle}</h2><div class="assessment-card-grid">{copy.audience.map((item, index) => <article><span>0{index + 1}</span><h3>{item}</h3></article>)}</div></div></section>
+
+    <section class="assessment-section"><div class="container assessment-split"><div><span class="eyebrow">{copy.includesEyebrow}</span><h2>{copy.includesTitle}</h2><p class="assessment-intro">{copy.includesIntro}</p></div><div class="assessment-check-grid">{copy.includes.map((item) => <p>{item}</p>)}</div></div></section>
+
+    <section class="assessment-section assessment-dark"><div class="container"><span class="eyebrow eyebrow-light">{copy.processEyebrow}</span><h2>{copy.processTitle}</h2><div class="assessment-process-grid">{copy.process.map(([number, title, detail]) => <article><span>{number}</span><h3>{title}</h3><p>{detail}</p></article>)}</div></div></section>
+
+    <section class="assessment-section assessment-soft"><div class="container assessment-deliverables"><div class="assessment-deliverable-panel"><span class="eyebrow">{copy.deliverEyebrow}</span><h2>{copy.deliverTitle}</h2><ul>{copy.deliverables.map((item) => <li>{item}</li>)}</ul></div><aside class="assessment-scope-panel"><div><span class="eyebrow eyebrow-light">{copy.scopeEyebrow}</span><h2>{copy.scopeTitle}</h2><p>{copy.scopeCopy}</p></div><a class="button button-cream" href={r.contact}>{copy.scopeButton}</a></aside></div></section>
+
+    <section class="assessment-section"><div class="container assessment-founder-strip"><Image src={portrait} alt="Brooke Wescott" widths={[320, 640]} sizes="(min-width: 900px) 320px, 100vw" loading="lazy" /><div><span class="eyebrow">{copy.founderEyebrow}</span><h2>{copy.founderTitle}</h2><p>{copy.founderCopy}</p></div><a class="text-link" href={r.about}>{copy.founderLink}</a></div></section>
+
+    <section class="assessment-section assessment-soft"><div class="container assessment-faq"><div><span class="eyebrow">{copy.questionsEyebrow}</span><h2>{copy.questionsTitle}</h2></div><div>{copy.questions.map(([question, answer]) => <article><h3>{question}</h3><p>{answer}</p></article>)}</div></div></section>
+
+    <section class="assessment-section"><div class="container assessment-cta-panel"><div><span class="eyebrow eyebrow-light">{copy.ctaEyebrow}</span><h2>{copy.ctaTitle}</h2><p>{copy.ctaCopy}</p></div><a class="button button-cream" href={r.contact}>{copy.ctaButton}</a></div></section>
+  </main>
+</BaseLayout>
