@@ -18,7 +18,7 @@ interface Props { lang: Language }
 const { lang } = Astro.props;
 const r = routes[lang];
 const isEnglish = lang === 'en';
-const homeTestimonials = selectTestimonials(lang, ['nisae', 'my-shala']);
+const homeTestimonials = selectTestimonials(lang, ['nisae', 'my-shala', 'meryeme-belmrhar']);
 
 const copy = isEnglish ? {
   metaTitle: 'Spa Consulting, Assessment & Training in Morocco | 2Hands',
