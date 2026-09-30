@@ -16,24 +16,26 @@ const copy = isEnglish ? {
   asideEyebrow: 'Choose your route', asideTitle: 'How can 2Hands help?', asideCopy: 'The hospitality form is for properties and management teams. The learner route is for individual course and professional-development enquiries.',
   hospitalityRoute: 'Hotels & spas', hospitalityRouteDetail: 'Assessment, training, signature treatments, support', learnerRoute: 'Individual learners', learnerRouteDetail: 'Courses and practitioner development', based: 'Based in Morocco', cities: 'Casablanca · Rabat', coverage: 'Interventions across Morocco',
   hospitalityEyebrow: 'Hospitality enquiry', hospitalityTitle: 'Discuss your property.',
-  labels: { name: 'Your name', role: 'Role', property: 'Property', city: 'City', team: 'Spa team size', service: 'Service interest', timing: 'Preferred timing', message: 'What would you like to address?' },
+  labels: { name: 'Your name', email: 'Email', role: 'Role', property: 'Property', city: 'City', team: 'Spa team size', service: 'Service interest', timing: 'Preferred timing', message: 'What would you like to address?' },
   placeholders: { name: 'Full name', role: 'Spa manager, GM, owner...', property: 'Hotel, resort, riad or spa', city: 'Location', team: 'Approximate number', timing: 'When would you like the work to begin?', message: 'Share the current situation, priorities or questions.' },
   services: ['Not sure yet', 'Performance assessment', 'Team training', 'Signature treatment', 'Ongoing support'],
-  formNote: 'Prototype form only. Submission will be connected during production.', hospitalityButton: 'Send hospitality enquiry',
+  formNote: 'Your details will only be used to respond to this enquiry.', hospitalityButton: 'Send hospitality enquiry',
   learnerEyebrow: 'Individual training enquiry', learnerTitle: 'Tell us what you want to learn.', learnerName: 'Your name', learnerEmail: 'Email', experience: 'Current experience', learnerMessage: 'What would you like to develop?', learnerMessagePlaceholder: 'Tell Brooke about your goal and availability.',
   experiences: ['Complete beginner', 'Massage student', 'Practising therapist', 'Experienced professional'], learnerButton: 'Send training enquiry',
+  submitting: 'Sending enquiry…', success: 'Thank you. Your enquiry has been sent to Brooke.', error: 'The enquiry could not be sent. Please try again in a moment.',
 } : {
   metaTitle: 'Contacter 2Hands', metaDescription: 'Contactez 2Hands pour un diagnostic spa, une formation d’équipe, un soin signature ou une formation individuelle.',
   eyebrow: 'Contacter 2Hands', title: 'Parlez-nous de ce que vous souhaitez améliorer, créer ou apprendre.', lead: 'Les projets hôteliers et les demandes de formation individuelle suivent deux parcours distincts afin que Brooke reçoive le bon contexte dès le départ.', imageNote: 'Brooke accompagne les hôtels, resorts, riads, spas, praticiens et apprenants individuels depuis le Maroc.',
   asideEyebrow: 'Choisir votre parcours', asideTitle: 'Comment 2Hands peut vous aider ?', asideCopy: 'Le formulaire hôtellerie s’adresse aux établissements et aux équipes de direction. Le parcours apprenant concerne les formations individuelles.',
   hospitalityRoute: 'Hôtels & spas', hospitalityRouteDetail: 'Diagnostic, formation, soins signature, suivi', learnerRoute: 'Apprenants individuels', learnerRouteDetail: 'Formations et développement professionnel', based: 'Basée au Maroc', cities: 'Casablanca · Rabat', coverage: 'Interventions dans tout le Maroc',
   hospitalityEyebrow: 'Demande hôtellerie', hospitalityTitle: 'Parler de votre établissement.',
-  labels: { name: 'Votre nom', role: 'Fonction', property: 'Établissement', city: 'Ville', team: 'Taille de l’équipe', service: 'Service recherché', timing: 'Période souhaitée', message: 'Que souhaitez-vous améliorer ?' },
+  labels: { name: 'Votre nom', email: 'Email', role: 'Fonction', property: 'Établissement', city: 'Ville', team: 'Taille de l’équipe', service: 'Service recherché', timing: 'Période souhaitée', message: 'Que souhaitez-vous améliorer ?' },
   placeholders: { name: 'Nom complet', role: 'Spa manager, direction...', property: 'Hôtel, resort, riad ou spa', city: 'Lieu', team: 'Nombre approximatif', timing: 'Quand souhaitez-vous commencer ?', message: 'Présentez la situation, les priorités ou les questions.' },
   services: ['Je ne sais pas encore', 'Diagnostic de performance', 'Formation équipe', 'Soin signature', 'Accompagnement continu'],
-  formNote: 'Formulaire prototype. L’envoi sera connecté pendant la production.', hospitalityButton: 'Envoyer la demande',
+  formNote: 'Vos coordonnées seront utilisées uniquement pour répondre à cette demande.', hospitalityButton: 'Envoyer la demande',
   learnerEyebrow: 'Demande de formation individuelle', learnerTitle: 'Parlez-nous de ce que vous souhaitez apprendre.', learnerName: 'Votre nom', learnerEmail: 'Email', experience: 'Votre expérience', learnerMessage: 'Que souhaitez-vous développer ?', learnerMessagePlaceholder: 'Présentez votre objectif et vos disponibilités.',
   experiences: ['Débutant complet', 'Étudiant en massage', 'Praticien', 'Professionnel expérimenté'], learnerButton: 'Envoyer la demande',
+  submitting: 'Envoi en cours…', success: 'Merci. Votre demande a bien été envoyée à Brooke.', error: 'La demande n’a pas pu être envoyée. Veuillez réessayer dans un instant.',
 };
 ---
 
@@ -41,23 +43,68 @@ const copy = isEnglish ? {
   <main id="main-content" class="assessment-page contact-page">
     <section class="assessment-hero"><div class="container assessment-hero-grid"><div class="assessment-hero-copy"><span class="eyebrow">{copy.eyebrow}</span><h1>{copy.title}</h1><p class="assessment-lead">{copy.lead}</p></div><figure class="assessment-hero-visual"><Image src={portrait} alt="Brooke Wescott" widths={[640, 900, 1200]} sizes="(min-width: 900px) 48vw, 100vw" loading="eager" fetchpriority="high" /><figcaption>{copy.imageNote}</figcaption></figure></div></section>
     <section class="assessment-section assessment-soft"><div class="container contact-grid"><aside class="contact-aside"><span class="eyebrow eyebrow-light">{copy.asideEyebrow}</span><h2>{copy.asideTitle}</h2><p>{copy.asideCopy}</p><nav class="contact-routes" aria-label={copy.asideEyebrow}><a href="#hospitality-enquiry"><strong>{copy.hospitalityRoute}</strong><br /><small>{copy.hospitalityRouteDetail}</small></a><a href="#academy-enquiry"><strong>{copy.learnerRoute}</strong><br /><small>{copy.learnerRouteDetail}</small></a></nav><p class="contact-location"><strong>{copy.based}</strong><br />{copy.cities}<br />{copy.coverage}</p></aside><div>
-      <form class="contact-form" id="hospitality-enquiry"><span class="eyebrow">{copy.hospitalityEyebrow}</span><h2>{copy.hospitalityTitle}</h2><div class="contact-form-grid">
-        <div class="contact-field"><label for="hospitality-name">{copy.labels.name}</label><input id="hospitality-name" name="name" autocomplete="name" placeholder={copy.placeholders.name} /></div>
+      <form class="contact-form" id="hospitality-enquiry" data-enquiry-form data-enquiry-type="hospitality" data-lang={lang} data-submitting={copy.submitting} data-success={copy.success} data-error={copy.error}><span class="eyebrow">{copy.hospitalityEyebrow}</span><h2>{copy.hospitalityTitle}</h2><div class="contact-form-grid">
+        <div class="contact-field"><label for="hospitality-name">{copy.labels.name}</label><input id="hospitality-name" name="name" autocomplete="name" placeholder={copy.placeholders.name} required /></div>
+        <div class="contact-field"><label for="hospitality-email">{copy.labels.email}</label><input id="hospitality-email" name="email" type="email" autocomplete="email" placeholder={isEnglish ? 'name@email.com' : 'nom@email.com'} required /></div>
         <div class="contact-field"><label for="hospitality-role">{copy.labels.role}</label><input id="hospitality-role" name="role" placeholder={copy.placeholders.role} /></div>
-        <div class="contact-field"><label for="hospitality-property">{copy.labels.property}</label><input id="hospitality-property" name="property" placeholder={copy.placeholders.property} /></div>
+        <div class="contact-field"><label for="hospitality-property">{copy.labels.property}</label><input id="hospitality-property" name="property" placeholder={copy.placeholders.property} required /></div>
         <div class="contact-field"><label for="hospitality-city">{copy.labels.city}</label><input id="hospitality-city" name="city" autocomplete="address-level2" placeholder={copy.placeholders.city} /></div>
         <div class="contact-field"><label for="hospitality-team">{copy.labels.team}</label><input id="hospitality-team" name="team-size" inputmode="numeric" placeholder={copy.placeholders.team} /></div>
         <div class="contact-field"><label for="hospitality-service">{copy.labels.service}</label><select id="hospitality-service" name="service">{copy.services.map((option) => <option>{option}</option>)}</select></div>
         <div class="contact-field contact-field-full"><label for="hospitality-timing">{copy.labels.timing}</label><input id="hospitality-timing" name="timing" placeholder={copy.placeholders.timing} /></div>
-        <div class="contact-field contact-field-full"><label for="hospitality-message">{copy.labels.message}</label><textarea id="hospitality-message" name="message" placeholder={copy.placeholders.message}></textarea></div>
-      </div><p class="contact-form-note">{copy.formNote}</p><button class="button button-primary" type="button">{copy.hospitalityButton}</button></form>
+        <div class="contact-field contact-field-full"><label for="hospitality-message">{copy.labels.message}</label><textarea id="hospitality-message" name="message" placeholder={copy.placeholders.message} required></textarea></div>
+        <div class="contact-honeypot" aria-hidden="true"><label for="hospitality-website">Website</label><input id="hospitality-website" name="website" tabindex="-1" autocomplete="off" /></div>
+      </div><p class="contact-form-note">{copy.formNote}</p><p class="contact-form-status" role="status" aria-live="polite"></p><button class="button button-primary" type="submit">{copy.hospitalityButton}</button></form>
 
-      <form class="contact-form" id="academy-enquiry"><span class="eyebrow">{copy.learnerEyebrow}</span><h2>{copy.learnerTitle}</h2><div class="contact-form-grid">
-        <div class="contact-field"><label for="learner-name">{copy.learnerName}</label><input id="learner-name" name="learner-name" autocomplete="name" placeholder={copy.placeholders.name} /></div>
-        <div class="contact-field"><label for="learner-email">{copy.learnerEmail}</label><input id="learner-email" name="learner-email" type="email" autocomplete="email" placeholder={isEnglish ? 'name@email.com' : 'nom@email.com'} /></div>
+      <form class="contact-form" id="academy-enquiry" data-enquiry-form data-enquiry-type="academy" data-lang={lang} data-submitting={copy.submitting} data-success={copy.success} data-error={copy.error}><span class="eyebrow">{copy.learnerEyebrow}</span><h2>{copy.learnerTitle}</h2><div class="contact-form-grid">
+        <div class="contact-field"><label for="learner-name">{copy.learnerName}</label><input id="learner-name" name="name" autocomplete="name" placeholder={copy.placeholders.name} required /></div>
+        <div class="contact-field"><label for="learner-email">{copy.learnerEmail}</label><input id="learner-email" name="email" type="email" autocomplete="email" placeholder={isEnglish ? 'name@email.com' : 'nom@email.com'} required /></div>
         <div class="contact-field contact-field-full"><label for="learner-experience">{copy.experience}</label><select id="learner-experience" name="experience">{copy.experiences.map((option) => <option>{option}</option>)}</select></div>
-        <div class="contact-field contact-field-full"><label for="learner-message">{copy.learnerMessage}</label><textarea id="learner-message" name="learner-message" placeholder={copy.learnerMessagePlaceholder}></textarea></div>
-      </div><p class="contact-form-note">{copy.formNote}</p><button class="button button-primary" type="button">{copy.learnerButton}</button></form>
+        <div class="contact-field contact-field-full"><label for="learner-message">{copy.learnerMessage}</label><textarea id="learner-message" name="message" placeholder={copy.learnerMessagePlaceholder} required></textarea></div>
+        <div class="contact-honeypot" aria-hidden="true"><label for="learner-website">Website</label><input id="learner-website" name="website" tabindex="-1" autocomplete="off" /></div>
+      </div><p class="contact-form-note">{copy.formNote}</p><p class="contact-form-status" role="status" aria-live="polite"></p><button class="button button-primary" type="submit">{copy.learnerButton}</button></form>
     </div></div></section>
   </main>
+  <script>
+  document.querySelectorAll<HTMLFormElement>('[data-enquiry-form]').forEach((form) => {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      const status = form.querySelector<HTMLElement>('.contact-form-status');
+      if (!button || !status) return;
+
+      const originalLabel = button.textContent || '';
+      status.className = 'contact-form-status';
+      status.textContent = form.dataset.submitting || '';
+      button.disabled = true;
+      button.setAttribute('aria-busy', 'true');
+
+      const payload = Object.fromEntries(new FormData(form).entries());
+      payload.type = form.dataset.enquiryType || '';
+      payload.lang = form.dataset.lang || 'en';
+
+      try {
+        const response = await fetch('/api/enquiry', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        if (!response.ok) throw new Error('Enquiry request failed');
+        status.classList.add('is-success');
+        status.textContent = form.dataset.success || '';
+        form.reset();
+      } catch {
+        status.classList.add('is-error');
+        status.textContent = form.dataset.error || '';
+      } finally {
+        button.disabled = false;
+        button.removeAttribute('aria-busy');
+        button.textContent = originalLabel;
+      }
+    });
+  });
+  </script>
 </BaseLayout>

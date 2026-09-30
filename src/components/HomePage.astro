@@ -33,7 +33,7 @@ const copy = isEnglish ? {
   heroAlt: 'Brooke Wescott guiding a team during a massage demonstration',
   heroCaption: 'Expertise grounded in observing the treatment, understanding the practitioner and meeting the standards expected by the property.',
   proofLabel: 'Experience with selected hospitality and wellness organizations',
-  proofAria: 'Organizations Brooke has worked with; logos pending publication approval',
+  proofAria: 'Organizations Brooke has worked with',
   challengeIndex: '01 · The challenge',
   challengeEyebrow: 'Quality goes beyond the protocol',
   challengeTitle: 'An exceptional treatment depends on more than technique alone.',
@@ -50,17 +50,15 @@ const copy = isEnglish ? {
   founderAlt: 'Professional portrait of Brooke Wescott',
   authority: [['25+ years', 'international practice across private practice, luxury hospitality and international clientele'], ['Technique-focused', 'therapist assessment, practical knowledge transfer and performance-focused development'], ['Two perspectives', 'guest experience, therapist performance, body mechanics and career longevity']],
   founderLink: 'Discover Brooke’s background',
-  credentialsEyebrow: 'Professional standing',
-  credentialsTitle: 'Certifications, affiliations & recognition.',
-  credentialsIntro: 'Verified professional membership is shown now. Additional certifications and recognition will be added once their titles, imagery and publication details are confirmed.',
+  credentialsEyebrow: 'Professional affiliation',
+  credentialsTitle: 'Verified international membership.',
+  credentialsIntro: '2Hands is an official member of the World Massage Federation, reflecting its commitment to professional massage practice, education and development.',
   membershipEyebrow: 'International affiliation',
   membershipTitle: 'Official member of the World Massage Federation.',
   membershipCopy: '2Hands is part of an international community dedicated to advancing massage practice, education and professional excellence.',
   membershipButton: 'Verify membership',
   membershipNote: 'Membership confirmed · verify on the official website',
   membershipAlt: 'World Massage Federation official member seal',
-  recognitionAria: 'Recognition items awaiting final assets',
-  recognition: [['Details to confirm', 'Professional certifications', 'Official certificate titles, awarding bodies and approved logos to be added.'], ['Images to confirm', 'World Massage Championships', 'Participation details, role, year and approved photography to be confirmed.'], ['Source to verify', 'Editorial recognition', 'Allure Magazine article, date, quotation and publication permission to be verified.']],
   servicesIndex: '03 · The solutions',
   servicesEyebrow: 'Support at every stage',
   servicesTitle: 'Four ways to strengthen your property’s guest experience.',
@@ -103,7 +101,7 @@ const copy = isEnglish ? {
   heroAlt: 'Brooke Wescott guidant une équipe pendant une démonstration de massage',
   heroCaption: 'Une expertise fondée sur l’observation du geste, la réalité du praticien et les standards attendus par l’établissement.',
   proofLabel: 'Expérience auprès d’établissements hôteliers et wellness sélectionnés',
-  proofAria: 'Organisations avec lesquelles Brooke a travaillé, logos à approuver avant publication',
+  proofAria: 'Organisations avec lesquelles Brooke a travaillé',
   challengeIndex: '01 · L’enjeu',
   challengeEyebrow: 'La qualité ne se résume pas au protocole',
   challengeTitle: 'Un soin remarquable ne dépend pas d’une seule technique.',
@@ -120,17 +118,15 @@ const copy = isEnglish ? {
   founderAlt: 'Portrait professionnel de Brooke Wescott',
   authority: [['25+ ans', 'de pratique internationale, en cabinet privé, hôtellerie de luxe et auprès d’une clientèle internationale'], ['Expertise technique', 'évaluation des thérapeutes, transmission pratique et développement axé sur la performance'], ['Double perspective', 'expérience client, performance, biomécanique et longévité professionnelle du thérapeute']],
   founderLink: 'Découvrir le parcours de Brooke',
-  credentialsEyebrow: 'Références professionnelles',
-  credentialsTitle: 'Certifications, affiliations & reconnaissance.',
-  credentialsIntro: 'L’adhésion professionnelle vérifiée est présentée dès maintenant. Les autres certifications et reconnaissances seront ajoutées après confirmation des intitulés, visuels et détails de publication.',
+  credentialsEyebrow: 'Affiliation professionnelle',
+  credentialsTitle: 'Une adhésion internationale vérifiée.',
+  credentialsIntro: '2Hands est membre officiel de la World Massage Federation, témoignant de son engagement envers la pratique, la formation et le développement professionnel du massage.',
   membershipEyebrow: 'Affiliation internationale',
   membershipTitle: 'Membre officiel de la World Massage Federation.',
   membershipCopy: '2Hands fait partie d’une communauté internationale dédiée au développement de la pratique, de la formation et de l’excellence professionnelle dans le massage.',
   membershipButton: 'Vérifier l’adhésion',
   membershipNote: 'Adhésion confirmée · vérification sur le site officiel',
   membershipAlt: 'Sceau de membre officiel de la World Massage Federation',
-  recognitionAria: 'Éléments de reconnaissance en attente des visuels définitifs',
-  recognition: [['Détails à confirmer', 'Certifications professionnelles', 'Intitulés officiels, organismes certificateurs et logos approuvés à ajouter.'], ['Visuels à confirmer', 'Championnats du monde de massage', 'Participation, rôle, année et photographies autorisées à confirmer.'], ['Source à vérifier', 'Reconnaissance éditoriale', 'Article Allure Magazine, date, citation et autorisation de publication à vérifier.']],
   servicesIndex: '03 · Les solutions',
   servicesEyebrow: 'Un accompagnement à chaque étape',
   servicesTitle: 'Quatre façons de renforcer l’expérience de votre établissement.',
@@ -208,7 +204,6 @@ const copy = isEnglish ? {
       <div class="container">
         <div class="home-credentials-heading"><div><span class="eyebrow">{copy.credentialsEyebrow}</span><h2 id="credentials-title">{copy.credentialsTitle}</h2></div><p>{copy.credentialsIntro}</p></div>
         <div class="home-membership-card"><Image class="home-membership-seal" src={wmfSeal} alt={copy.membershipAlt} width={128} loading="lazy" /><div class="home-membership-copy"><span class="eyebrow">{copy.membershipEyebrow}</span><h2>{copy.membershipTitle}</h2><p>{copy.membershipCopy}</p></div><div class="home-membership-action"><a class="button button-outline" href="https://worldmassagefederation.com/project/members/" target="_blank" rel="noopener">{copy.membershipButton}</a><small>{copy.membershipNote}</small></div></div>
-        <div class="home-recognition-grid" aria-label={copy.recognitionAria}>{copy.recognition.map(([status, title, detail]) => <article><span>{status}</span><h3>{title}</h3><p>{detail}</p></article>)}</div>
       </div>
     </section>
 
@@ -237,7 +232,6 @@ const copy = isEnglish ? {
         '.home-founder-grid',
         '.home-credentials-heading',
         '.home-membership-card',
-        '.home-recognition-grid > article',
         '.home-services-heading',
         '.home-services-grid > article',
         '.home-process-heading',
@@ -251,7 +245,6 @@ const copy = isEnglish ? {
 
       const elements = [...page.querySelectorAll(revealSelectors.join(','))];
       const staggerGroups = [
-        '.home-recognition-grid',
         '.home-services-grid',
         '.home-process',
         '.home-quote-grid',
