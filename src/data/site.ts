@@ -29,14 +29,14 @@ export const routes = {
 
 export const navigation = {
   en: [
-    ['Hotels & Spas', routes.en.home],
+    ['Home', routes.en.home],
     ['Services', routes.en.services],
     ['Brooke Wescott', routes.en.about],
     ['References', routes.en.references],
     ['Training', routes.en.academy],
   ],
   fr: [
-    ['Hôtellerie & Spas', routes.fr.home],
+    ['Accueil', routes.fr.home],
     ['Services', routes.fr.services],
     ['Brooke Wescott', routes.fr.about],
     ['Références', routes.fr.references],
