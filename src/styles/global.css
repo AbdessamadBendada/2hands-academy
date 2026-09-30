@@ -320,6 +320,9 @@ h3 { font-size: clamp(1.55rem, 2vw, 2rem); }
   .mobile-menu-panel nav a.active { color: var(--clay); }
   .mobile-menu-panel nav a:hover { color: var(--clay); }
   .mobile-menu-panel nav .mobile-menu-contact { display: flex; min-height: 52px; align-items: center; justify-content: center; margin-top: 14px; padding: 14px 18px; border: 0; border-radius: 12px; background: var(--clay); color: white; font: 750 10px "Inter", sans-serif; letter-spacing: 0.1em; text-transform: uppercase; }
+  .mobile-menu-panel nav .mobile-menu-contact:hover,
+  .mobile-menu-panel nav .mobile-menu-contact:focus-visible,
+  .mobile-menu-panel nav .mobile-menu-contact:active { background: #795947; color: white; }
 
   .mobile-menu-panel-footer { display: grid; gap: 18px; margin-top: auto; padding: 24px 28px 28px; border-top: 1px solid var(--line); }
   .mobile-languages { display: flex; gap: 12px; }
