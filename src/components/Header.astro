@@ -43,7 +43,7 @@ const labels = lang === 'en'
     </a>
 
     <nav class="desktop-nav" aria-label={lang === 'en' ? 'Main navigation' : 'Navigation principale'}>
-      {nav.map(([label, href]) => <a class:list={{ active: isActive(href) }} href={href}>{label}</a>)}
+      {nav.map(([label, href]) => <a class:list={{ active: isActive(href) }} href={href} aria-current={isActive(href) ? 'page' : undefined}>{label}</a>)}
     </nav>
 
     <div class="header-actions">
@@ -80,7 +80,7 @@ const labels = lang === 'en'
             <span>{label}</span>
           </a>
         ))}
-        <a class="mobile-menu-contact" href={routes[lang].contact}>
+        <a class="mobile-menu-contact" href={routes[lang].contact} aria-current={currentPath === routes[lang].contact ? 'page' : undefined}>
           <span>{labels.contact}</span>
         </a>
       </nav>

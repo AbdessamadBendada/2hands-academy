@@ -3,6 +3,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 import type { Language } from '../data/site';
+import arimaFont from '../assets/fonts/Arima.ttf?url';
 
 interface Props {
   title: string;
@@ -13,12 +14,41 @@ interface Props {
   image?: string;
 }
 
-const { title, description, lang, enPath, frPath, image = '/og-default.jpg' } = Astro.props;
+const { title, description, lang, enPath, frPath, image = '/og-2hands.jpg' } = Astro.props;
 const currentPath = lang === 'en' ? enPath : frPath;
 const canonical = new URL(currentPath, Astro.site);
 const englishUrl = new URL(enPath, Astro.site);
 const frenchUrl = new URL(frPath, Astro.site);
 const socialImage = new URL(image, Astro.site);
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${Astro.site}#organization`,
+      name: '2Hands',
+      url: Astro.site,
+      founder: { '@id': `${Astro.site}#brooke-wescott` },
+      areaServed: { '@type': 'Country', name: 'Morocco' },
+      sameAs: ['https://ma.linkedin.com/company/2-hands-massage-academy'],
+    },
+    {
+      '@type': 'Person',
+      '@id': `${Astro.site}#brooke-wescott`,
+      name: 'Brooke Wescott',
+      jobTitle: 'Massage and spa performance consultant',
+      worksFor: { '@id': `${Astro.site}#organization` },
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${Astro.site}#website`,
+      name: '2Hands',
+      url: Astro.site,
+      publisher: { '@id': `${Astro.site}#organization` },
+      inLanguage: ['en', 'fr'],
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -40,9 +70,18 @@ const socialImage = new URL(image, Astro.site);
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={socialImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="2Hands spa consulting, assessment and training in Morocco" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
+    <meta name="twitter:image:alt" content="2Hands spa consulting, assessment and training in Morocco" />
     <title>{title}</title>
+    <link rel="preload" href={arimaFont} as="font" type="font/ttf" crossorigin="anonymous" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
   </head>
   <body>
     <a class="skip-link" href="#main-content">{lang === 'en' ? 'Skip to content' : 'Aller au contenu'}</a>

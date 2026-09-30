@@ -99,7 +99,7 @@
   .assessment-cta-panel .button { justify-self: start; }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 820px) {
   .assessment-page h1 { font-size: clamp(43px, 12vw, 54px); line-height: 1; }
   .assessment-page h2 { font-size: 40px; }
   .assessment-page h3 { font-size: 29px; }
