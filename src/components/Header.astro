@@ -12,7 +12,11 @@ interface Props {
 
 const { lang, enPath, frPath, currentPath } = Astro.props;
 const nav = navigation[lang];
-const isActive = (href: string) => href === currentPath || (href === routes[lang].services && currentPath.startsWith(routes[lang].services));
+const isActive = (href: string) => {
+  if (href === routes[lang].home) return currentPath === routes[lang].home;
+  if (href === routes[lang].services) return currentPath.startsWith(routes[lang].services);
+  return href === currentPath;
+};
 const labels = lang === 'en'
   ? {
       menu: 'Menu',
