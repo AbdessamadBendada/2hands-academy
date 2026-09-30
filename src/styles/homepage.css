@@ -9,14 +9,14 @@
 .homepage h3 { margin-bottom: 14px; font-size: 31px; }
 
 .homepage .eyebrow {
-  gap: 13px;
+  gap: 10px;
   margin-bottom: 24px;
   font-size: 13px;
   font-weight: 650;
   letter-spacing: 0.21em;
   line-height: 1.3;
 }
-.homepage .eyebrow::before { width: 36px; }
+.homepage .eyebrow::before { width: 5px; }
 .homepage .eyebrow-light { color: var(--sand); }
 .homepage .button { min-height: 54px; padding: 15px 25px; font-size: 13px; font-weight: 650; letter-spacing: 0.12em; line-height: 1.2; }
 .homepage .text-link { gap: 15px; padding-bottom: 5px; font-size: 13px; font-weight: 650; letter-spacing: 0.1em; }
@@ -341,7 +341,7 @@
   .homepage h2 { font-size: 40px; line-height: 1.04; }
   .homepage h3 { font-size: 29px; line-height: 1.08; }
   .homepage .eyebrow { gap: 10px; margin-bottom: 18px; font-size: 10px; letter-spacing: 0.17em; }
-  .homepage .eyebrow::before { width: 26px; }
+  .homepage .eyebrow::before { width: 4px; height: 4px; }
   .home-section-index { margin-bottom: 14px; font-size: 10px; letter-spacing: 0.14em; }
   .homepage .button { min-height: 52px; padding: 14px 18px; font-size: 10px; letter-spacing: 0.085em; }
   .homepage .text-link { gap: 10px; font-size: 10px; letter-spacing: 0.07em; }

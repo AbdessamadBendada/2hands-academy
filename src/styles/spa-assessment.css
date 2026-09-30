@@ -5,8 +5,8 @@
 .assessment-page h1 { margin-bottom: 26px; font-size: clamp(58px, 4.45vw, 76px); }
 .assessment-page h2 { margin-bottom: 22px; font-size: 50px; }
 .assessment-page h3 { margin-bottom: 12px; font-size: 29px; }
-.assessment-page .eyebrow { gap: 13px; margin-bottom: 20px; font-size: 12px; font-weight: 680; letter-spacing: 0.19em; line-height: 1.3; }
-.assessment-page .eyebrow::before { width: 36px; }
+.assessment-page .eyebrow { gap: 10px; margin-bottom: 20px; font-size: 12px; font-weight: 680; letter-spacing: 0.19em; line-height: 1.3; }
+.assessment-page .eyebrow::before { width: 5px; }
 .assessment-page .eyebrow-light { color: var(--sand); }
 .assessment-page .button { min-height: 52px; padding: 14px 23px; font-size: 11px; font-weight: 700; letter-spacing: 0.09em; }
 .assessment-page .text-link { gap: 12px; padding-bottom: 4px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; }
@@ -104,7 +104,7 @@
   .assessment-page h2 { font-size: 40px; }
   .assessment-page h3 { font-size: 29px; }
   .assessment-page .eyebrow { gap: 10px; margin-bottom: 18px; font-size: 10px; letter-spacing: 0.17em; }
-  .assessment-page .eyebrow::before { width: 26px; }
+  .assessment-page .eyebrow::before { width: 4px; height: 4px; }
   .assessment-page .button { width: 100%; min-height: 52px; white-space: normal; text-align: center; }
   .assessment-page .text-link { font-size: 10px; }
   .assessment-hero { padding: 48px 0 42px; }

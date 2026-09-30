@@ -3,8 +3,8 @@
 .about-page h1 { margin-bottom: 30px; font-size: clamp(54px, 4vw, 66px); }
 .about-page h2 { margin-bottom: 28px; font-size: 52px; }
 .about-page h3 { margin-bottom: 14px; font-size: 31px; }
-.about-page .eyebrow { gap: 13px; margin-bottom: 22px; font-size: 12px; font-weight: 650; letter-spacing: 0.2em; }
-.about-page .eyebrow::before { width: 36px; }
+.about-page .eyebrow { gap: 10px; margin-bottom: 22px; font-size: 12px; font-weight: 650; letter-spacing: 0.2em; }
+.about-page .eyebrow::before { width: 5px; }
 .about-page .eyebrow-light { color: var(--sand); }
 .about-index { display: block; margin-bottom: 16px; color: var(--bronze); font-size: 12px; font-weight: 650; letter-spacing: 0.16em; }
 

@@ -20,7 +20,6 @@ const labels = lang === 'en'
       contact: 'Contact',
       home: '2Hands home',
       explore: 'Explore 2Hands',
-      menuIntro: 'Massage expertise for stronger teams and memorable guest experiences.',
       location: 'Casablanca · Rabat · Projects across Morocco',
     }
   : {
@@ -29,7 +28,6 @@ const labels = lang === 'en'
       contact: 'Contact',
       home: 'Accueil 2Hands',
       explore: 'Explorer 2Hands',
-      menuIntro: 'L’expertise du massage au service des équipes et d’expériences client mémorables.',
       location: 'Casablanca · Rabat · Interventions au Maroc',
     };
 ---
@@ -71,16 +69,15 @@ const labels = lang === 'en'
     <div class="mobile-menu-panel-body">
       <div class="mobile-menu-intro">
         <span>{labels.explore}</span>
-        <p>{labels.menuIntro}</p>
       </div>
       <nav aria-label={lang === 'en' ? 'Mobile navigation' : 'Navigation mobile'}>
-        {nav.map(([label, href], index) => (
-          <a class:list={{ active: isActive(href) }} href={href} aria-current={isActive(href) ? 'page' : undefined} style={`--menu-item: ${index}`}>
-            <small>{String(index + 1).padStart(2, '0')}</small><span>{label}</span>
+        {nav.map(([label, href]) => (
+          <a class:list={{ active: isActive(href) }} href={href} aria-current={isActive(href) ? 'page' : undefined}>
+            <span>{label}</span>
           </a>
         ))}
-        <a class="mobile-menu-contact" href={routes[lang].contact} style={`--menu-item: ${nav.length}`}>
-          <small>{String(nav.length + 1).padStart(2, '0')}</small><span>{labels.contact}</span>
+        <a class="mobile-menu-contact" href={routes[lang].contact}>
+          <span>{labels.contact}</span>
         </a>
       </nav>
     </div>
