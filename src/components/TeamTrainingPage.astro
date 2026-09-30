@@ -2,7 +2,10 @@
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { routes, type Language } from '../data/site';
+import { selectTestimonials } from '../data/testimonials';
+import TestimonialsSection from './TestimonialsSection.astro';
 import '../styles/spa-assessment.css';
+import '../styles/content-pages.css';
 import teaching from '../assets/images/brooke-teaching-landscape.webp';
 import portrait from '../assets/images/brooke-portrait.jpeg';
 
@@ -10,6 +13,7 @@ interface Props { lang: Language }
 const { lang } = Astro.props;
 const r = routes[lang];
 const isEnglish = lang === 'en';
+const trainingTestimonials = selectTestimonials(lang, ['nisae', 'my-shala']);
 
 const copy = isEnglish ? {
   metaTitle: 'Hotel Spa Team Training | 2Hands',
@@ -46,6 +50,9 @@ const copy = isEnglish ? {
   founderTitle: 'Experienced hands. Operational perspective.',
   founderCopy: 'Brooke brings more than 25 years of international massage and bodywork experience, combining treatment expertise with a practical understanding of guest expectations and therapist longevity.',
   founderLink: 'Meet Brooke',
+  testimonialsEyebrow: 'From spa and wellness teams',
+  testimonialsTitle: 'Training that changes how practitioners work, not only what they know.',
+  testimonialsIntro: 'Clients value Brooke\u2019s ability to connect technical precision with body mechanics, presence and the details that make a treatment memorable.',
   questionsEyebrow: 'Questions',
   questionsTitle: 'Before we begin.',
   questions: [['Can training be delivered without an assessment?', 'Yes. If management already understands the need, training can begin from a clear brief. A focused review may still be used at the start.'], ['Is this suitable for mixed-experience teams?', 'Yes. Sessions can combine shared standards with individual feedback so that therapists develop from their current level.'], ['Will the spa need to close?', 'Not necessarily. Scheduling can be planned in groups or phases to reduce disruption to operations.']],
@@ -88,6 +95,9 @@ const copy = isEnglish ? {
   founderTitle: 'Une expertise pratique et un regard opérationnel.',
   founderCopy: 'Brooke apporte plus de 25 ans d’expérience internationale en massage et bodywork, avec une compréhension concrète des attentes du client et de la longévité du praticien.',
   founderLink: 'Découvrir Brooke',
+  testimonialsEyebrow: 'Retours d\u2019équipes spa et wellness',
+  testimonialsTitle: 'Une formation qui transforme la pratique, pas seulement les connaissances.',
+  testimonialsIntro: 'Les clients apprécient la capacité de Brooke à relier précision technique, mécanique corporelle, présence et détails qui rendent un soin mémorable.',
   questionsEyebrow: 'Questions',
   questionsTitle: 'Avant de commencer.',
   questions: [['La formation peut-elle avoir lieu sans diagnostic ?', 'Oui. Si la direction connaît déjà le besoin, la formation peut commencer à partir d’un brief clair.'], ['Convient-elle à une équipe de niveaux différents ?', 'Oui. Les standards communs peuvent être associés à des retours individuels adaptés au niveau de chacun.'], ['Le spa doit-il fermer ?', 'Pas nécessairement. Les sessions peuvent être organisées par groupes ou par phases afin de limiter l’impact opérationnel.']],
@@ -113,6 +123,8 @@ const copy = isEnglish ? {
     <section class="assessment-section assessment-dark"><div class="container"><span class="eyebrow eyebrow-light">{copy.processEyebrow}</span><h2>{copy.processTitle}</h2><div class="assessment-process-grid">{copy.process.map(([number, title, detail]) => <article><span>{number}</span><h3>{title}</h3><p>{detail}</p></article>)}</div></div></section>
 
     <section class="assessment-section assessment-soft"><div class="container assessment-deliverables"><div class="assessment-deliverable-panel"><span class="eyebrow">{copy.deliverEyebrow}</span><h2>{copy.deliverTitle}</h2><ul>{copy.deliverables.map((item) => <li>{item}</li>)}</ul></div><aside class="assessment-scope-panel"><div><span class="eyebrow eyebrow-light">{copy.scopeEyebrow}</span><h2>{copy.scopeTitle}</h2><p>{copy.scopeCopy}</p></div><a class="button button-cream" href={r.contact}>{copy.scopeButton}</a></aside></div></section>
+
+    <TestimonialsSection eyebrow={copy.testimonialsEyebrow} title={copy.testimonialsTitle} intro={copy.testimonialsIntro} items={trainingTestimonials} compact />
 
     <section class="assessment-section"><div class="container assessment-founder-strip"><Image src={portrait} alt="Brooke Wescott" widths={[320, 640]} sizes="(min-width: 900px) 320px, 100vw" loading="lazy" /><div><span class="eyebrow">{copy.founderEyebrow}</span><h2>{copy.founderTitle}</h2><p>{copy.founderCopy}</p></div><a class="text-link" href={r.about}>{copy.founderLink}</a></div></section>
 

@@ -1,0 +1,45 @@
+---
+import type { Testimonial } from '../data/testimonials';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  intro?: string;
+  items: Testimonial[];
+  tone?: 'plain' | 'soft';
+  compact?: boolean;
+}
+
+const { eyebrow, title, intro, items, tone = 'soft', compact = false } = Astro.props;
+---
+
+<section class:list={['assessment-section', 'testimonial-section', tone === 'soft' && 'assessment-soft', compact && 'testimonial-section-compact']}>
+  <div class="container">
+    <header class="testimonial-section-heading">
+      <div>
+        <span class="eyebrow">{eyebrow}</span>
+        <h2>{title}</h2>
+      </div>
+      {intro && <p>{intro}</p>}
+    </header>
+    <div class="testimonial-card-grid">
+      {items.map((testimonial) => (
+        <article class="testimonial-card">
+          <div class="testimonial-card-topline">
+            <span>{testimonial.context}</span>
+            {testimonial.translationNote && <small>{testimonial.translationNote}</small>}
+          </div>
+          <div class="testimonial-quote-mark" aria-hidden="true">“</div>
+          <blockquote>
+            {(compact ? [testimonial.excerpt] : testimonial.quote).map((paragraph) => <p>{paragraph}</p>)}
+          </blockquote>
+          <footer>
+            <strong>{testimonial.name}</strong>
+            <span>{testimonial.role}</span>
+            {testimonial.organisation && <span>{testimonial.organisation}</span>}
+          </footer>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
