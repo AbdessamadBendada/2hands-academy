@@ -14,11 +14,27 @@ const { lang, enPath, frPath, currentPath } = Astro.props;
 const nav = navigation[lang];
 const isActive = (href: string) => href === currentPath || (href === routes[lang].services && currentPath.startsWith(routes[lang].services));
 const labels = lang === 'en'
-  ? { menu: 'Menu', close: 'Close menu', contact: 'Contact', home: '2Hands home' }
-  : { menu: 'Menu', close: 'Fermer le menu', contact: 'Contact', home: 'Accueil 2Hands' };
+  ? {
+      menu: 'Menu',
+      close: 'Close menu',
+      contact: 'Contact',
+      home: '2Hands home',
+      explore: 'Explore 2Hands',
+      menuIntro: 'Massage expertise for stronger teams and memorable guest experiences.',
+      location: 'Casablanca · Rabat · Projects across Morocco',
+    }
+  : {
+      menu: 'Menu',
+      close: 'Fermer le menu',
+      contact: 'Contact',
+      home: 'Accueil 2Hands',
+      explore: 'Explorer 2Hands',
+      menuIntro: 'L’expertise du massage au service des équipes et d’expériences client mémorables.',
+      location: 'Casablanca · Rabat · Interventions au Maroc',
+    };
 ---
 
-<header class="site-header">
+<header class="site-header" data-site-header>
   <div class="container header-inner">
     <a class="brand" href={routes[lang].home} aria-label={labels.home}>
       <Image src={logo} alt="2Hands Massage Academy" width={150} loading="eager" />
@@ -37,18 +53,110 @@ const labels = lang === 'en'
       <a class="button button-outline header-contact" href={routes[lang].contact}>{labels.contact}</a>
     </div>
 
-    <details class="mobile-menu">
-      <summary>{labels.menu}</summary>
-      <div class="mobile-menu-panel">
-        <nav aria-label={lang === 'en' ? 'Mobile navigation' : 'Navigation mobile'}>
-          {nav.map(([label, href]) => <a class:list={{ active: isActive(href) }} href={href}>{label}</a>)}
-          <a href={routes[lang].contact}>{labels.contact}</a>
-        </nav>
-        <div class="mobile-languages">
-          <a href={enPath} lang="en" aria-current={lang === 'en' ? 'page' : undefined}>English</a>
-          <a href={frPath} lang="fr" aria-current={lang === 'fr' ? 'page' : undefined}>Français</a>
-        </div>
-      </div>
-    </details>
+    <button class="mobile-menu-trigger" type="button" aria-expanded="false" aria-controls="mobile-navigation">
+      <span class="mobile-menu-trigger-icon" aria-hidden="true"><i></i><i></i></span>
+      <span>{labels.menu}</span>
+    </button>
   </div>
+
+  <button class="mobile-menu-backdrop" type="button" tabindex="-1" aria-label={labels.close}></button>
+  <aside id="mobile-navigation" class="mobile-menu-panel" role="dialog" aria-modal="true" aria-hidden="true" aria-label={labels.explore} inert>
+    <div class="mobile-menu-panel-top">
+      <a class="mobile-panel-brand" href={routes[lang].home} aria-label={labels.home}>
+        <Image src={logo} alt="2Hands Massage Academy" width={130} loading="eager" />
+      </a>
+      <button class="mobile-menu-close" type="button" aria-label={labels.close}><span aria-hidden="true"></span></button>
+    </div>
+
+    <div class="mobile-menu-panel-body">
+      <div class="mobile-menu-intro">
+        <span>{labels.explore}</span>
+        <p>{labels.menuIntro}</p>
+      </div>
+      <nav aria-label={lang === 'en' ? 'Mobile navigation' : 'Navigation mobile'}>
+        {nav.map(([label, href], index) => (
+          <a class:list={{ active: isActive(href) }} href={href} aria-current={isActive(href) ? 'page' : undefined} style={`--menu-item: ${index}`}>
+            <small>{String(index + 1).padStart(2, '0')}</small><span>{label}</span>
+          </a>
+        ))}
+        <a class="mobile-menu-contact" href={routes[lang].contact} style={`--menu-item: ${nav.length}`}>
+          <small>{String(nav.length + 1).padStart(2, '0')}</small><span>{labels.contact}</span>
+        </a>
+      </nav>
+    </div>
+
+    <div class="mobile-menu-panel-footer">
+      <div class="mobile-languages" aria-label={lang === 'en' ? 'Language' : 'Langue'}>
+        <a href={enPath} lang="en" aria-current={lang === 'en' ? 'page' : undefined}>English</a>
+        <a href={frPath} lang="fr" aria-current={lang === 'fr' ? 'page' : undefined}>Français</a>
+      </div>
+      <p>{labels.location}</p>
+    </div>
+  </aside>
 </header>
+
+<script is:inline>
+  (() => {
+    const header = document.querySelector('[data-site-header]');
+    if (!header) return;
+
+    const trigger = header.querySelector('.mobile-menu-trigger');
+    const panel = header.querySelector('.mobile-menu-panel');
+    const closeButton = header.querySelector('.mobile-menu-close');
+    const backdrop = header.querySelector('.mobile-menu-backdrop');
+    const desktopQuery = window.matchMedia('(min-width: 1051px)');
+    if (!trigger || !panel || !closeButton || !backdrop) return;
+
+    let restoreFocus = null;
+    const isOpen = () => document.body.classList.contains('mobile-menu-open');
+
+    const openMenu = () => {
+      if (isOpen()) return;
+      restoreFocus = document.activeElement;
+      panel.removeAttribute('inert');
+      panel.setAttribute('aria-hidden', 'false');
+      trigger.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('mobile-menu-open');
+      requestAnimationFrame(() => closeButton.focus());
+    };
+
+    const closeMenu = (returnFocus = true) => {
+      if (!isOpen()) return;
+      document.body.classList.remove('mobile-menu-open');
+      trigger.setAttribute('aria-expanded', 'false');
+      panel.setAttribute('aria-hidden', 'true');
+      panel.setAttribute('inert', '');
+      if (returnFocus && restoreFocus instanceof HTMLElement) restoreFocus.focus();
+    };
+
+    trigger.addEventListener('click', () => isOpen() ? closeMenu() : openMenu());
+    closeButton.addEventListener('click', () => closeMenu());
+    backdrop.addEventListener('click', () => closeMenu());
+    panel.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => closeMenu(false)));
+
+    document.addEventListener('keydown', (event) => {
+      if (!isOpen()) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeMenu();
+        return;
+      }
+      if (event.key !== 'Tab') return;
+
+      const focusable = [...panel.querySelectorAll('a[href], button:not([disabled])')];
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+
+    desktopQuery.addEventListener('change', (event) => {
+      if (event.matches) closeMenu(false);
+    });
+  })();
+</script>
