@@ -12,10 +12,12 @@ interface Props {
   enPath: string;
   frPath: string;
   image?: string;
+  noindex?: boolean;
+  headerPath?: string;
 }
 
-const { title, description, lang, enPath, frPath, image = '/og-2hands.jpg' } = Astro.props;
-const currentPath = lang === 'en' ? enPath : frPath;
+const { title, description, lang, enPath, frPath, image = '/og-2hands.jpg', noindex = false, headerPath } = Astro.props;
+const currentPath = headerPath ?? (lang === 'en' ? enPath : frPath);
 const canonical = new URL(currentPath, Astro.site);
 const englishUrl = new URL(enPath, Astro.site);
 const frenchUrl = new URL(frPath, Astro.site);
@@ -58,7 +60,7 @@ const structuredData = {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
-    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
     <link rel="canonical" href={canonical} />
     <link rel="alternate" hreflang="en" href={englishUrl} />
     <link rel="alternate" hreflang="fr" href={frenchUrl} />

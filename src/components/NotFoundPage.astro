@@ -1,0 +1,188 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { routes, type Language } from '../data/site';
+
+interface Props { lang: Language }
+const { lang } = Astro.props;
+const r = routes[lang];
+
+const copy = lang === 'en'
+  ? {
+      metaTitle: 'Page not found | 2Hands',
+      metaDescription: 'The page you requested could not be found. Return to 2Hands or explore spa consulting and massage training services.',
+      eyebrow: 'A wrong turn',
+      title: 'This page has wandered off course.',
+      lead: 'The link may be outdated or the page may have moved. Let us guide you back to the useful part of the journey.',
+      home: 'Return home',
+      services: 'Explore services',
+      prompt: 'Perhaps you were looking for',
+      links: [
+        ['Hospitality services', r.services],
+        ['Brooke Wescott', r.about],
+        ['Massage training', r.academy],
+        ['Contact 2Hands', r.contact],
+      ],
+    }
+  : {
+      metaTitle: 'Page introuvable | 2Hands',
+      metaDescription: 'La page demandée est introuvable. Revenez à 2Hands ou découvrez les services de conseil spa et les formations en massage.',
+      eyebrow: 'Une autre direction',
+      title: 'Cette page semble avoir changé de chemin.',
+      lead: 'Le lien est peut-être ancien ou la page a été déplacée. Retrouvons ensemble la bonne direction.',
+      home: 'Retour à l’accueil',
+      services: 'Découvrir les services',
+      prompt: 'Vous cherchiez peut-être',
+      links: [
+        ['Services hôteliers', r.services],
+        ['Brooke Wescott', r.about],
+        ['Formations massage', r.academy],
+        ['Contacter 2Hands', r.contact],
+      ],
+    };
+---
+
+<BaseLayout
+  title={copy.metaTitle}
+  description={copy.metaDescription}
+  {lang}
+  enPath={routes.en.home}
+  frPath={routes.fr.home}
+  headerPath={lang === 'en' ? '/404/' : '/fr/404/'}
+  noindex
+>
+  <main id="main-content" class="not-found-page">
+    <section class="not-found-hero">
+      <div class="container not-found-grid">
+        <div class="not-found-copy">
+          <span class="eyebrow">{copy.eyebrow}</span>
+          <div class="not-found-number" aria-hidden="true">404</div>
+          <h1>{copy.title}</h1>
+          <p>{copy.lead}</p>
+          <div class="not-found-actions">
+            <a class="button button-primary" href={r.home}>{copy.home}</a>
+            <a class="button button-outline" href={r.services}>{copy.services}</a>
+          </div>
+        </div>
+
+        <aside class="not-found-directory" aria-label={copy.prompt}>
+          <span>{copy.prompt}</span>
+          <nav>
+            {copy.links.map(([label, href], index) => (
+              <a href={href}>
+                <small>0{index + 1}</small>
+                <strong>{label}</strong>
+                <i aria-hidden="true">→</i>
+              </a>
+            ))}
+          </nav>
+        </aside>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .not-found-page {
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 84% 20%, rgba(212, 184, 150, 0.22), transparent 30%),
+      var(--ivory);
+  }
+
+  .not-found-hero {
+    display: grid;
+    min-height: calc(100svh - 94px);
+    align-items: center;
+    padding: clamp(58px, 8vw, 104px) 0;
+  }
+
+  .not-found-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.08fr) minmax(330px, 0.72fr);
+    align-items: center;
+    gap: clamp(52px, 8vw, 126px);
+  }
+
+  .not-found-copy { max-width: 720px; }
+
+  .not-found-number {
+    margin-bottom: 8px;
+    color: var(--sand);
+    font-family: "Arima", Georgia, serif;
+    font-size: clamp(5.75rem, 11vw, 9.5rem);
+    font-weight: 500;
+    letter-spacing: -0.08em;
+    line-height: 0.72;
+  }
+
+  .not-found-copy h1 {
+    max-width: 680px;
+    font-size: clamp(3.25rem, 5.2vw, 5rem);
+  }
+
+  .not-found-copy > p {
+    max-width: 620px;
+    margin: 28px 0 0;
+    color: var(--ink-soft);
+    font-size: clamp(1rem, 1.3vw, 1.15rem);
+    line-height: 1.75;
+  }
+
+  .not-found-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 34px;
+  }
+
+  .not-found-directory {
+    padding: clamp(28px, 4vw, 44px);
+    border: 1px solid var(--line);
+    border-radius: 26px;
+    background: rgba(255, 253, 249, 0.88);
+    box-shadow: 0 24px 64px rgba(44, 36, 31, 0.08);
+  }
+
+  .not-found-directory > span {
+    display: block;
+    margin-bottom: 20px;
+    color: var(--clay);
+    font-size: 0.7rem;
+    font-weight: 750;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .not-found-directory nav { border-top: 1px solid var(--line); }
+
+  .not-found-directory a {
+    display: grid;
+    min-height: 76px;
+    grid-template-columns: 32px 1fr auto;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--line);
+    transition: color 160ms ease, padding-left 160ms ease;
+  }
+
+  .not-found-directory a:hover { padding-left: 6px; color: var(--clay); }
+  .not-found-directory small { color: var(--bronze); font-size: 0.65rem; font-style: normal; letter-spacing: 0.08em; }
+  .not-found-directory strong { font-family: "Arima", Georgia, serif; font-size: clamp(1.25rem, 2vw, 1.55rem); font-weight: 500; line-height: 1.15; }
+  .not-found-directory i { font-size: 1.15rem; font-style: normal; }
+
+  @media (max-width: 900px) {
+    .not-found-hero { min-height: auto; }
+    .not-found-grid { grid-template-columns: 1fr; gap: 48px; }
+    .not-found-copy { max-width: 760px; }
+  }
+
+  @media (max-width: 560px) {
+    .not-found-hero { padding: 48px 0 64px; }
+    .not-found-number { font-size: 5.6rem; }
+    .not-found-copy h1 { font-size: clamp(2.85rem, 13vw, 3.65rem); }
+    .not-found-actions { flex-direction: column; }
+    .not-found-actions .button { width: 100%; }
+    .not-found-directory { padding: 24px; border-radius: 20px; }
+    .not-found-directory a { min-height: 70px; }
+  }
+</style>

@@ -17,5 +17,5 @@ export default defineConfig({
       prefixDefaultLocale: false,
     },
   },
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (page) => !page.endsWith('/fr/404.html/') })],
 });

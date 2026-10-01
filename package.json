@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "postbuild": "node scripts/finalize-build.mjs",
     "audit": "npm run build && node scripts/audit-site.mjs",
     "preview": "astro preview",
     "astro": "astro"
