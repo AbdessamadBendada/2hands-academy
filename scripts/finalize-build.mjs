@@ -10,3 +10,15 @@ const html = await readFile(nestedEnglish404);
 
 await rm(dirname(nestedEnglish404), { recursive: true });
 await writeFile(english404, html);
+
+// Astro's sitemap integration always emits an index plus numbered chunks.
+// This site has a single small sitemap, so publish that chunk directly at the
+// conventional /sitemap.xml URL and let Cloudflare redirect the legacy paths.
+const generatedSitemap = resolve('dist/sitemap-0.xml');
+const generatedSitemapIndex = resolve('dist/sitemap-index.xml');
+const directSitemap = resolve('dist/sitemap.xml');
+const sitemapXml = await readFile(generatedSitemap);
+
+await writeFile(directSitemap, sitemapXml);
+await rm(generatedSitemap);
+await rm(generatedSitemapIndex);
