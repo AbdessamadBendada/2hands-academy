@@ -1,0 +1,9 @@
+/fr / 301
+/fr/ / 301
+/fr/* /:splat 301
+/about/ /en/about/ 301
+/academy/ /en/academy/ 301
+/services/assessment/ /en/services/assessment/ 301
+/services/team-training/ /en/services/team-training/ 301
+/services/signature-treatment/ /en/services/signature-treatment/ 301
+/services/ongoing-support/ /en/services/ongoing-support/ 301

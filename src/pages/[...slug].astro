@@ -18,15 +18,15 @@ export function getStaticPaths() {
 }
 
 const { page } = Astro.props;
-const isServicesOverview = page.slug === 'services' || page.slug === 'fr/services';
-const isAssessment = page.slug === 'services/assessment' || page.slug === 'fr/services/diagnostic';
-const isTraining = page.slug === 'services/team-training' || page.slug === 'fr/services/formation-equipe';
-const isSignature = page.slug === 'services/signature-treatment' || page.slug === 'fr/services/soin-signature';
-const isSupport = page.slug === 'services/ongoing-support' || page.slug === 'fr/services/accompagnement';
-const isAbout = page.slug === 'about' || page.slug === 'fr/a-propos';
-const isReferences = page.slug === 'references' || page.slug === 'fr/references';
-const isAcademy = page.slug === 'academy' || page.slug === 'fr/formations';
-const isContact = page.slug === 'contact' || page.slug === 'fr/contact';
+const isServicesOverview = page.slug === 'en/services' || page.slug === 'services';
+const isAssessment = page.slug === 'en/services/assessment' || page.slug === 'services/diagnostic';
+const isTraining = page.slug === 'en/services/team-training' || page.slug === 'services/formation-equipe';
+const isSignature = page.slug === 'en/services/signature-treatment' || page.slug === 'services/soin-signature';
+const isSupport = page.slug === 'en/services/ongoing-support' || page.slug === 'services/accompagnement';
+const isAbout = page.slug === 'en/about' || page.slug === 'a-propos';
+const isReferences = page.slug === 'en/references' || page.slug === 'references';
+const isAcademy = page.slug === 'en/academy' || page.slug === 'formations';
+const isContact = page.slug === 'en/contact' || page.slug === 'contact';
 ---
 
 {isServicesOverview

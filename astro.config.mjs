@@ -11,11 +11,11 @@ export default defineConfig({
     format: 'directory',
   },
   i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'fr'],
+    defaultLocale: 'fr',
+    locales: ['fr', 'en'],
     routing: {
       prefixDefaultLocale: false,
     },
   },
-  integrations: [sitemap({ filter: (page) => !page.endsWith('/fr/404.html/') })],
+  integrations: [sitemap({ filter: (page) => !page.endsWith('/en/404.html/') })],
 });

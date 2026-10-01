@@ -59,7 +59,14 @@ for (const [route, html] of pages) {
     const normalized = path || route;
     const target = pages.get(normalized);
     if (!target) {
-      if (!normalized.startsWith('/_astro/') && !normalized.startsWith('/favicon')) errors.push(`${route}: broken internal link ${href}`);
+      const asset = resolve(root, normalized.replace(/^\/+/, ''));
+      let assetExists = false;
+      try {
+        assetExists = (await stat(asset)).isFile();
+      } catch {
+        assetExists = false;
+      }
+      if (!assetExists) errors.push(`${route}: broken internal link ${href}`);
       continue;
     }
     if (hash && !target.includes(`id="${hash}"`)) errors.push(`${route}: missing anchor target ${href}`);
