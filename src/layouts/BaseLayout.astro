@@ -3,7 +3,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 import type { Language } from '../data/site';
-import arimaFont from '../assets/fonts/Arima.ttf?url';
+import arimaFont from '../assets/fonts/Arima.woff2?url';
 
 interface Props {
   title: string;
@@ -85,7 +85,7 @@ const structuredData = {
     <meta name="twitter:image" content={socialImage} />
     <meta name="twitter:image:alt" content={socialImageAlt} />
     <title>{title}</title>
-    <link rel="preload" href={arimaFont} as="font" type="font/ttf" crossorigin="anonymous" />
+    <link rel="preload" href={arimaFont} as="font" type="font/woff2" crossorigin="anonymous" />
     <meta name="theme-color" content="#8d6956" />
     <link rel="icon" type="image/png" sizes="64x64" href="/favicon-v2.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
