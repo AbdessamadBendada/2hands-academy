@@ -12,6 +12,7 @@ export const routes = {
     references: '/en/references/',
     academy: '/en/academy/',
     contact: '/en/contact/',
+    privacy: '/en/privacy-policy/',
   },
   fr: {
     home: '/',
@@ -24,6 +25,7 @@ export const routes = {
     references: '/references/',
     academy: '/formations/',
     contact: '/contact/',
+    privacy: '/politique-confidentialite/',
   },
 } as const;
 

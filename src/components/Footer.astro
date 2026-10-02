@@ -12,6 +12,7 @@ const content = lang === 'en'
       hospitality: 'Hotels & Spas', explore: '2Hands', information: 'Information',
       assessment: 'Performance assessment', training: 'Team training', signature: 'Signature treatments', support: 'Ongoing support',
       about: 'Brooke Wescott', references: 'References', academy: 'Academy', contact: 'Contact',
+      privacy: 'Privacy policy',
       language: 'Version française', languageHref: routes.fr.home,
       location: 'Casablanca · Rabat · Projects across Morocco',
     }
@@ -20,6 +21,7 @@ const content = lang === 'en'
       hospitality: 'Hôtellerie & Spas', explore: '2Hands', information: 'Informations',
       assessment: 'Diagnostic de performance', training: 'Formation des équipes', signature: 'Soins signature', support: 'Accompagnement continu',
       about: 'Brooke Wescott', references: 'Références', academy: 'Formations', contact: 'Contact',
+      privacy: 'Politique de confidentialité',
       language: 'English version', languageHref: routes.en.home,
       location: 'Casablanca · Rabat · Interventions au Maroc',
     };
@@ -53,6 +55,7 @@ const content = lang === 'en'
       <h2>{content.information}</h2>
       <nav>
         <a href={content.languageHref}>{content.language}</a>
+        <a href={r.privacy}>{content.privacy}</a>
         <a href="https://ma.linkedin.com/company/2-hands-massage-academy" rel="me noopener" target="_blank">LinkedIn</a>
       </nav>
     </div>

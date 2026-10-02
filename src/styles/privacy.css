@@ -1,0 +1,33 @@
+.privacy-hero { padding: clamp(76px, 9vw, 132px) 0; border-bottom: 1px solid var(--line); background: var(--linen); }
+.privacy-hero-inner { max-width: 960px; }
+.privacy-hero h1 { margin-bottom: 26px; }
+.privacy-hero p { max-width: 780px; margin-bottom: 24px; color: var(--ink-soft); font-size: clamp(1.05rem, 1.6vw, 1.28rem); line-height: 1.75; }
+.privacy-hero small { color: var(--clay); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+.privacy-content { padding: var(--section-space) 0; }
+.privacy-layout { display: grid; grid-template-columns: minmax(230px, 0.34fr) minmax(0, 1fr); align-items: start; gap: clamp(50px, 8vw, 120px); }
+.privacy-layout > aside { position: sticky; top: 24px; display: grid; gap: 12px; padding: 30px; border: 1px solid var(--line); border-radius: 18px; background: var(--paper); color: var(--ink-soft); font-size: 13px; line-height: 1.65; }
+.privacy-layout > aside strong { color: var(--espresso); font-size: 12px; letter-spacing: 0.08em; }
+.privacy-layout address { font-style: normal; }
+.privacy-layout > aside a { overflow-wrap: anywhere; color: var(--clay); font-weight: 650; }
+.privacy-sections section { padding: 0 0 38px; border-bottom: 1px solid var(--line); }
+.privacy-sections section + section { padding-top: 38px; }
+.privacy-sections h2 { margin-bottom: 16px; font-size: clamp(1.65rem, 2.4vw, 2.25rem); line-height: 1.2; }
+.privacy-sections p { max-width: 850px; margin: 0; color: var(--ink-soft); line-height: 1.8; }
+.privacy-contact { padding: 64px 0; background: var(--linen); }
+.privacy-contact-inner { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 40px; }
+.privacy-contact h2 { margin-bottom: 12px; font-size: clamp(2rem, 3.2vw, 3rem); }
+.privacy-contact p { margin: 0; color: var(--ink-soft); }
+
+@media (max-width: 800px) {
+  .privacy-layout { grid-template-columns: 1fr; gap: 42px; }
+  .privacy-layout > aside { position: static; }
+  .privacy-contact-inner { grid-template-columns: 1fr; }
+  .privacy-contact .button { justify-self: start; }
+}
+
+@media (max-width: 600px) {
+  .privacy-hero { padding: 62px 0; }
+  .privacy-layout > aside { padding: 24px; }
+  .privacy-sections section { padding-bottom: 30px; }
+  .privacy-sections section + section { padding-top: 30px; }
+}

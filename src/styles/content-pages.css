@@ -60,6 +60,11 @@
 .contact-form-status.is-success { color: var(--green-deep); }
 .contact-form-status.is-error { color: #8a352d; }
 .contact-form button:disabled { cursor: wait; opacity: 0.62; }
+.contact-consent { display: grid; grid-template-columns: 20px 1fr; align-items: start; gap: 12px; margin-top: 2px; }
+.contact-consent input { width: 18px; height: 18px; margin: 3px 0 0; accent-color: var(--clay); }
+.contact-consent label { color: var(--ink-soft); font-size: 12px; line-height: 1.65; }
+.contact-consent a { color: var(--espresso); font-weight: 700; text-decoration: underline; text-decoration-color: var(--bronze); text-underline-offset: 3px; }
+.contact-consent a:hover { color: var(--clay); }
 
 @media (max-width: 900px) {
   .reference-story-grid, .academy-route-grid { grid-template-columns: 1fr; }

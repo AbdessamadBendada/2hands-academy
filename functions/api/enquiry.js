@@ -49,8 +49,9 @@ export async function onRequestPost({ request, env }) {
   const email = clean(payload.email, 254).toLowerCase();
   const message = clean(payload.message, 4_000);
   const property = clean(payload.property, 160);
+  const hasPrivacyConsent = payload['privacy-consent'] === 'accepted';
 
-  if (!type || !name || !isValidEmail(email) || !message || (type === 'hospitality' && !property)) {
+  if (!type || !name || !isValidEmail(email) || !message || !hasPrivacyConsent || (type === 'hospitality' && !property)) {
     return json({ error: 'missing_or_invalid_fields' }, 422);
   }
 
@@ -131,4 +132,3 @@ export async function onRequestPost({ request, env }) {
 export function onRequestGet() {
   return json({ error: 'method_not_allowed' }, 405);
 }
-
