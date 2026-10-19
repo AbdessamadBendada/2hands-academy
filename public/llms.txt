@@ -1,0 +1,37 @@
+# 2Hands Massage Academy
+
+> 2Hands is a bilingual hospitality performance partner based in Casablanca, Morocco. Founder Brooke Wescott brings more than 25 years of international hands-on massage and bodywork experience. She helps hotels, resorts, riads and professional spas assess massage quality, develop spa teams, create signature treatments and maintain consistent guest-experience standards.
+
+French is the website's default language. English pages are available under `/en/`. 2Hands works primarily in Casablanca, Rabat and nearby regions, with selected projects elsewhere in Morocco and internationally.
+
+## Hospitality services
+
+- [Services hôtellerie et spa — français](https://2handsacademy.com/services/): Overview of the four hospitality pathways.
+- [Hospitality and spa services — English](https://2handsacademy.com/en/services/): English overview of the four hospitality pathways.
+- [Diagnostic de performance de l'équipe spa](https://2handsacademy.com/services/diagnostic/): Technical assessment and development priorities for spa teams.
+- [Spa Team Performance Assessment](https://2handsacademy.com/en/services/assessment/): English assessment information.
+- [Formation ciblée des équipes spa](https://2handsacademy.com/services/formation-equipe/): Practical, on-site team development.
+- [Spa team training](https://2handsacademy.com/en/services/team-training/): English team-training information.
+- [Création de soins signature](https://2handsacademy.com/services/soin-signature/): Treatment concept, protocol and team transfer.
+- [Signature treatment development](https://2handsacademy.com/en/services/signature-treatment/): English signature-treatment information.
+- [Accompagnement et continuité](https://2handsacademy.com/services/accompagnement/): Reassessment, recalibration and management support.
+- [Ongoing support](https://2handsacademy.com/en/services/ongoing-support/): English ongoing-support information.
+
+## Founder and professional references
+
+- [Brooke Wescott — français](https://2handsacademy.com/a-propos/): Founder profile and professional approach.
+- [Brooke Wescott — English](https://2handsacademy.com/en/about/): English founder profile.
+- [Références et témoignages](https://2handsacademy.com/references/): Selected professional references and testimonials in French.
+- [References and testimonials](https://2handsacademy.com/en/references/): Selected professional references and testimonials in English.
+
+## Academy
+
+- [Formations 2Hands](https://2handsacademy.com/formations/): Massage training for individuals in French.
+- [2Hands Academy](https://2handsacademy.com/en/academy/): Massage training for individuals in English.
+
+## Contact and policies
+
+- [Contact — français](https://2handsacademy.com/contact/): Hospitality and individual-training enquiries.
+- [Contact — English](https://2handsacademy.com/en/contact/): English enquiry page.
+- [Politique de confidentialité](https://2handsacademy.com/politique-confidentialite/)
+- [Privacy policy](https://2handsacademy.com/en/privacy-policy/)
