@@ -1,10 +1,11 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/images/2hands-logo.png';
+import { blogRoutes } from '../data/blog';
 import { routes, type Language } from '../data/site';
 
-interface Props { lang: Language }
-const { lang } = Astro.props;
+interface Props { lang: Language; hasPublicBlog: boolean }
+const { lang, hasPublicBlog } = Astro.props;
 const r = routes[lang];
 const content = lang === 'en'
   ? {
@@ -13,6 +14,7 @@ const content = lang === 'en'
       assessment: 'Performance assessment', training: 'Team training', signature: 'Signature treatments', support: 'Ongoing support',
       about: 'Brooke Wescott', references: 'References', academy: 'Academy', contact: 'Contact',
       privacy: 'Privacy policy',
+      blog: 'Insights',
       language: 'Version française', languageHref: routes.fr.home,
       location: 'Casablanca · Rabat · Projects across Morocco',
     }
@@ -22,6 +24,7 @@ const content = lang === 'en'
       assessment: 'Diagnostic de performance', training: 'Formation des équipes', signature: 'Soins signature', support: 'Accompagnement continu',
       about: 'Brooke Wescott', references: 'Références', academy: 'Formations', contact: 'Contact',
       privacy: 'Politique de confidentialité',
+      blog: 'Conseils',
       language: 'English version', languageHref: routes.en.home,
       location: 'Casablanca · Rabat · Interventions au Maroc',
     };
@@ -49,6 +52,7 @@ const content = lang === 'en'
         <a href={r.references}>{content.references}</a>
         <a href={r.academy}>{content.academy}</a>
         <a href={r.contact}>{content.contact}</a>
+        {hasPublicBlog && <a href={blogRoutes[lang]}>{content.blog}</a>}
       </nav>
     </div>
     <div>

@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/images/2hands-logo.png';
+import { blogRoutes } from '../data/blog';
 import { navigation, routes, type Language } from '../data/site';
 
 interface Props {
@@ -8,13 +9,18 @@ interface Props {
   enPath: string;
   frPath: string;
   currentPath: string;
+  hasPublicBlog: boolean;
 }
 
-const { lang, enPath, frPath, currentPath } = Astro.props;
-const nav = navigation[lang];
+const { lang, enPath, frPath, currentPath, hasPublicBlog } = Astro.props;
+const nav = [
+  ...navigation[lang],
+  ...(hasPublicBlog ? [[lang === 'fr' ? 'Conseils' : 'Insights', blogRoutes[lang]] as const] : []),
+];
 const isActive = (href: string) => {
   if (href === routes[lang].home) return currentPath === routes[lang].home;
   if (href === routes[lang].services) return currentPath.startsWith(routes[lang].services);
+  if (href === blogRoutes[lang]) return currentPath.startsWith(blogRoutes[lang]);
   return href === currentPath;
 };
 const labels = lang === 'en'

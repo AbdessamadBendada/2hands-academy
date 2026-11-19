@@ -1,0 +1,13 @@
+---
+import { getCollection } from 'astro:content';
+import BlogRoute from '../../components/BlogRoute.astro';
+import { getBlogStaticPaths } from '../../data/blog';
+
+export async function getStaticPaths() {
+  return getBlogStaticPaths(await getCollection('blog'), 'fr');
+}
+
+const props = Astro.props;
+---
+
+<BlogRoute {...props} />

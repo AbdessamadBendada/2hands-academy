@@ -1,7 +1,9 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { getCollection } from 'astro:content';
 import '../styles/global.css';
+import { getCompletePublishedBlogPairs } from '../data/blog';
 import type { Language } from '../data/site';
 import arimaFont from '../assets/fonts/Arima.woff2?url';
 
@@ -14,17 +16,28 @@ interface Props {
   image?: string;
   noindex?: boolean;
   headerPath?: string;
+  ogType?: 'website' | 'article';
+  socialImageAlt?: string;
+  publishedAt?: Date;
+  updatedAt?: Date;
+  additionalStructuredData?: Record<string, unknown>[];
+  feedUrl?: string;
 }
 
-const { title, description, lang, enPath, frPath, image = '/og-2hands.jpg', noindex = false, headerPath } = Astro.props;
+const {
+  title, description, lang, enPath, frPath, image = '/og-2hands.jpg', noindex = false, headerPath,
+  ogType = 'website', socialImageAlt: suppliedSocialImageAlt, publishedAt, updatedAt,
+  additionalStructuredData = [], feedUrl,
+} = Astro.props;
 const currentPath = headerPath ?? (lang === 'en' ? enPath : frPath);
 const canonical = new URL(currentPath, Astro.site);
 const englishUrl = new URL(enPath, Astro.site);
 const frenchUrl = new URL(frPath, Astro.site);
 const socialImage = new URL(image, Astro.site);
-const socialImageAlt = lang === 'fr'
+const socialImageAlt = suppliedSocialImageAlt ?? (lang === 'fr'
   ? '2Hands, conseil spa, diagnostic et formation massage au Maroc'
-  : '2Hands spa consulting, assessment and massage training in Morocco';
+  : '2Hands spa consulting, assessment and massage training in Morocco');
+const hasPublicBlog = getCompletePublishedBlogPairs(await getCollection('blog')).length > 0;
 const structuredData = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -52,6 +65,7 @@ const structuredData = {
       publisher: { '@id': `${Astro.site}#organization` },
       inLanguage: ['fr', 'en'],
     },
+    ...additionalStructuredData,
   ],
 };
 ---
@@ -68,7 +82,7 @@ const structuredData = {
     <link rel="alternate" hreflang="en" href={englishUrl} />
     <link rel="alternate" hreflang="fr" href={frenchUrl} />
     <link rel="alternate" hreflang="x-default" href={frenchUrl} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="2Hands" />
     <meta property="og:locale" content={lang === 'en' ? 'en_US' : 'fr_FR'} />
     <meta property="og:locale:alternate" content={lang === 'en' ? 'fr_FR' : 'en_US'} />
@@ -84,6 +98,10 @@ const structuredData = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
     <meta name="twitter:image:alt" content={socialImageAlt} />
+    {ogType === 'article' && publishedAt && <meta property="article:published_time" content={publishedAt.toISOString()} />}
+    {ogType === 'article' && updatedAt && <meta property="article:modified_time" content={updatedAt.toISOString()} />}
+    {ogType === 'article' && <meta property="article:author" content="Brooke Wescott" />}
+    {feedUrl && <link rel="alternate" type="application/rss+xml" title="2Hands Insights" href={new URL(feedUrl, Astro.site)} />}
     <title>{title}</title>
     <link rel="preload" href={arimaFont} as="font" type="font/woff2" crossorigin="anonymous" />
     <meta name="theme-color" content="#8d6956" />
@@ -93,9 +111,9 @@ const structuredData = {
   </head>
   <body>
     <a class="skip-link" href="#main-content">{lang === 'en' ? 'Skip to content' : 'Aller au contenu'}</a>
-    <Header {lang} {enPath} {frPath} {currentPath} />
+    <Header {lang} {enPath} {frPath} {currentPath} {hasPublicBlog} />
     <slot />
-    <Footer {lang} />
+    <Footer {lang} {hasPublicBlog} />
     <script is:inline>
       (() => {
         if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;

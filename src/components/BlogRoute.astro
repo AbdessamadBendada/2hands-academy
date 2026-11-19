@@ -1,0 +1,147 @@
+---
+import { getImage, Image } from 'astro:assets';
+import { render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { blogArticlePath, blogRoutes, type BlogEntry } from '../data/blog';
+import { routes, type Language } from '../data/site';
+import '../styles/blog.css';
+
+type Props =
+  | { kind: 'hub'; language: Language; posts: BlogEntry[] }
+  | { kind: 'article'; language: Language; entry: BlogEntry; translation: BlogEntry; posts: BlogEntry[] };
+
+const props = Astro.props as Props;
+const { language } = props;
+const isFrench = language === 'fr';
+const locale = isFrench ? 'fr-MA' : 'en-GB';
+const formatDate = (date: Date) => date.toLocaleDateString(locale, { day: 'numeric', month: 'long', year: 'numeric' });
+const hubCopy = isFrench
+  ? {
+      title: 'Conseils pour les équipes spa et l’hôtellerie | 2Hands',
+      description: 'Analyses et conseils pratiques pour évaluer les soins, développer les équipes spa et renforcer les standards de l’expérience client.',
+      eyebrow: 'Conseils 2Hands', heading: 'Expertise spa, qualité du soin et développement des équipes.',
+      intro: 'Des ressources destinées aux directions d’hôtels, responsables spa et équipes qui souhaitent renforcer la qualité, la cohérence et l’expérience client.',
+      read: 'Lire l’article', latest: 'Dernières publications', perspective: 'Une perspective de terrain',
+      perspectiveCopy: 'Chaque article relie l’expertise technique du massage aux réalités du praticien, du management et de l’expérience client.',
+    }
+  : {
+      title: 'Insights for Hotel Spa Teams and Leaders | 2Hands',
+      description: 'Practical guidance for assessing treatments, developing hotel spa teams and strengthening consistent guest-experience standards.',
+      eyebrow: '2Hands insights', heading: 'Spa expertise, treatment quality and team development.',
+      intro: 'Resources for hotel leaders, spa managers and teams seeking stronger treatment quality, consistency and guest experiences.',
+      read: 'Read the article', latest: 'Latest insights', perspective: 'A practitioner-led perspective',
+      perspectiveCopy: 'Each article connects technical massage expertise with the realities of practitioners, management and the guest experience.',
+    };
+const articleCopy = isFrench
+  ? {
+      home: 'Accueil', hub: 'Conseils', by: 'Par', published: 'Publié le', updated: 'Mis à jour le',
+      serviceEyebrow: 'Pour votre établissement', serviceTitle: 'Transformer l’observation en priorités concrètes.',
+      serviceCopy: '2Hands accompagne les hôtels, resorts, riads et spas avec une approche technique, humaine et directement reliée aux réalités de l’équipe.',
+      relatedEyebrow: 'À lire également', relatedTitle: 'Poursuivre la réflexion', read: 'Lire l’article',
+    }
+  : {
+      home: 'Home', hub: 'Insights', by: 'By', published: 'Published', updated: 'Updated',
+      serviceEyebrow: 'For your property', serviceTitle: 'Turn observation into clear priorities.',
+      serviceCopy: '2Hands supports hotels, resorts, riads and spas with a technical, human approach grounded in the realities of the team.',
+      relatedEyebrow: 'Related reading', relatedTitle: 'Continue exploring', read: 'Read the article',
+    };
+
+let Content: Awaited<ReturnType<typeof render>>['Content'] | undefined;
+let frPath = blogRoutes.fr;
+let enPath = blogRoutes.en;
+let relatedPosts: BlogEntry[] = [];
+let socialImage = '/og-2hands.jpg';
+let structuredData: Record<string, unknown>[] = [];
+
+if (props.kind === 'hub') {
+  structuredData = [{
+    '@type': 'CollectionPage',
+    '@id': new URL(blogRoutes[language], Astro.site).href,
+    url: new URL(blogRoutes[language], Astro.site).href,
+    name: hubCopy.heading,
+    description: hubCopy.description,
+    inLanguage: language,
+    isPartOf: { '@id': `${Astro.site}#website` },
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: props.posts.map((post, index) => ({
+        '@type': 'ListItem', position: index + 1,
+        url: new URL(blogArticlePath(language, post.data.slug), Astro.site).href,
+        name: post.data.title,
+      })),
+    },
+  }];
+}
+
+if (props.kind === 'article') {
+  ({ Content } = await render(props.entry));
+  frPath = language === 'fr' ? blogArticlePath('fr', props.entry.data.slug) : blogArticlePath('fr', props.translation.data.slug);
+  enPath = language === 'en' ? blogArticlePath('en', props.entry.data.slug) : blogArticlePath('en', props.translation.data.slug);
+  const requestedKeys = new Set(props.entry.data.relatedTranslationKeys);
+  const candidates = props.posts.filter((post) => post.data.translationKey !== props.entry.data.translationKey);
+  relatedPosts = [
+    ...candidates.filter((post) => requestedKeys.has(post.data.translationKey)),
+    ...candidates.filter((post) => !requestedKeys.has(post.data.translationKey)),
+  ].slice(0, 3);
+  socialImage = (await getImage({ src: props.entry.data.heroImage, width: 1200, height: 630, fit: 'cover', format: 'jpg' })).src;
+  const canonicalUrl = new URL(language === 'fr' ? frPath : enPath, Astro.site).href;
+  const absoluteImage = new URL(socialImage, Astro.site).href;
+  structuredData = [
+    {
+      '@type': 'BlogPosting', '@id': `${canonicalUrl}#article`, mainEntityOfPage: canonicalUrl,
+      headline: props.entry.data.title, description: props.entry.data.description, image: [absoluteImage],
+      datePublished: props.entry.data.publishedAt.toISOString(),
+      dateModified: (props.entry.data.updatedAt ?? props.entry.data.publishedAt).toISOString(),
+      inLanguage: language,
+      author: { '@id': `${Astro.site}#brooke-wescott` },
+      publisher: { '@id': `${Astro.site}#organization` },
+      keywords: [props.entry.data.primaryKeyword, ...props.entry.data.secondaryKeywords].join(', '),
+    },
+    {
+      '@type': 'BreadcrumbList', '@id': `${canonicalUrl}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: articleCopy.home, item: new URL(routes[language].home, Astro.site).href },
+        { '@type': 'ListItem', position: 2, name: articleCopy.hub, item: new URL(blogRoutes[language], Astro.site).href },
+        { '@type': 'ListItem', position: 3, name: props.entry.data.title, item: canonicalUrl },
+      ],
+    },
+  ];
+}
+---
+
+{props.kind === 'hub' ? (
+  <BaseLayout title={hubCopy.title} description={hubCopy.description} lang={language} frPath={blogRoutes.fr} enPath={blogRoutes.en} additionalStructuredData={structuredData} feedUrl="/rss.xml">
+    <main id="main-content" class="blog-hub">
+      <section class="blog-hub-hero"><div class="container blog-hub-hero-grid">
+        <div><span class="eyebrow">{hubCopy.eyebrow}</span><h1>{hubCopy.heading}</h1></div>
+        <div class="blog-hub-intro"><p>{hubCopy.intro}</p><div class="blog-hub-principle"><span>{hubCopy.perspective}</span><p>{hubCopy.perspectiveCopy}</p></div></div>
+      </div></section>
+      <section class="blog-hub-content" aria-labelledby="blog-list-title"><div class="container">
+        <div class="blog-list-heading"><span class="eyebrow" id="blog-list-title">{hubCopy.latest}</span><span>{String(props.posts.length).padStart(2, '0')}</span></div>
+        <div class="blog-card-grid">{props.posts.map((post, index) => (
+          <article class:list={['blog-card', { 'blog-card-featured': index === 0 }]}>
+            <a class="blog-card-image" href={blogArticlePath(language, post.data.slug)} tabindex="-1"><Image src={post.data.heroImage} alt={post.data.heroImageAlt} widths={[480, 760, 1100]} sizes={index === 0 ? '(min-width: 900px) 55vw, 100vw' : '(min-width: 900px) 31vw, 100vw'} /></a>
+            <div class="blog-card-content"><div class="blog-card-meta"><time datetime={post.data.publishedAt.toISOString()}>{formatDate(post.data.publishedAt)}</time></div><h2><a href={blogArticlePath(language, post.data.slug)}>{post.data.title}</a></h2><p>{post.data.excerpt}</p><a class="text-link" href={blogArticlePath(language, post.data.slug)}>{hubCopy.read}</a></div>
+          </article>
+        ))}</div>
+      </div></section>
+    </main>
+  </BaseLayout>
+) : (
+  <BaseLayout title={props.entry.data.title} description={props.entry.data.description} lang={language} frPath={frPath} enPath={enPath} image={socialImage} socialImageAlt={props.entry.data.heroImageAlt} ogType="article" publishedAt={props.entry.data.publishedAt} updatedAt={props.entry.data.updatedAt} additionalStructuredData={structuredData} feedUrl="/rss.xml">
+    <main id="main-content" class="blog-article"><article>
+      <header class="blog-article-header"><div class="container blog-article-header-inner">
+        <nav class="blog-breadcrumbs" aria-label={isFrench ? 'Fil d’Ariane' : 'Breadcrumb'}><a href={routes[language].home}>{articleCopy.home}</a><span aria-hidden="true">/</span><a href={blogRoutes[language]}>{articleCopy.hub}</a></nav>
+        <div class="blog-article-heading"><span class="eyebrow">{hubCopy.eyebrow}</span><h1>{props.entry.data.title}</h1><p class="blog-article-excerpt">{props.entry.data.excerpt}</p><div class="blog-article-meta">
+          <span>{articleCopy.by} <a href={props.entry.data.authorUrl}>{props.entry.data.author}</a></span>
+          <span>{articleCopy.published} <time datetime={props.entry.data.publishedAt.toISOString()}>{formatDate(props.entry.data.publishedAt)}</time></span>
+          {props.entry.data.updatedAt && <span>{articleCopy.updated} <time datetime={props.entry.data.updatedAt.toISOString()}>{formatDate(props.entry.data.updatedAt)}</time></span>}
+        </div></div>
+      </div></header>
+      <div class="container blog-hero-image"><Image src={props.entry.data.heroImage} alt={props.entry.data.heroImageAlt} widths={[720, 1100, 1500]} sizes="(min-width: 900px) 1200px, 100vw" loading="eager" /></div>
+      <div class="container blog-article-layout"><aside class="blog-article-rail" aria-label={isFrench ? 'Informations sur l’article' : 'Article information'}><span>Expertise</span><p>{props.entry.data.primaryKeyword}</p></aside><div class="blog-article-body">{Content && <Content />}</div></div>
+      <section class="blog-service-cta"><div class="container blog-service-cta-inner"><div><span class="eyebrow eyebrow-light">{articleCopy.serviceEyebrow}</span><h2>{articleCopy.serviceTitle}</h2></div><div><p>{articleCopy.serviceCopy}</p><a class="button button-cream" href={props.entry.data.serviceUrl}>{props.entry.data.serviceLabel}</a></div></div></section>
+      {relatedPosts.length > 0 && <section class="blog-related" aria-labelledby="related-title"><div class="container"><span class="eyebrow">{articleCopy.relatedEyebrow}</span><h2 id="related-title">{articleCopy.relatedTitle}</h2><div class="blog-related-grid">{relatedPosts.map((post) => <article><time datetime={post.data.publishedAt.toISOString()}>{formatDate(post.data.publishedAt)}</time><h3><a href={blogArticlePath(language, post.data.slug)}>{post.data.title}</a></h3><a class="text-link" href={blogArticlePath(language, post.data.slug)}>{articleCopy.read}</a></article>)}</div></div></section>}
+    </article></main>
+  </BaseLayout>
+)}
