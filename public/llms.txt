@@ -24,6 +24,13 @@ French is the website's default language. English pages are available under `/en
 - [Références et témoignages](https://2handsacademy.com/references/): Selected professional references and testimonials in French.
 - [References and testimonials](https://2handsacademy.com/en/references/): Selected professional references and testimonials in English.
 
+## Insights and practical guidance
+
+- [Conseils 2Hands — français](https://2handsacademy.com/conseils/): French articles on massage quality, spa-team development and guest experience.
+- [2Hands insights — English](https://2handsacademy.com/en/insights/): English articles for hotel leaders, spa managers and massage professionals.
+- [Massage suédois ou deep tissue : quelles différences ?](https://2handsacademy.com/conseils/massage-suedois-ou-deep-tissue/): Brooke Wescott's French perspective on pressure, intention, communication and spa-team consistency.
+- [Swedish Massage vs Deep Tissue: What Really Changes?](https://2handsacademy.com/en/insights/swedish-massage-vs-deep-tissue/): English version of Brooke's practitioner-led comparison.
+
 ## Academy
 
 - [Formations 2Hands](https://2handsacademy.com/formations/): Massage training for individuals in French.
