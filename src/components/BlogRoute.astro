@@ -35,18 +35,23 @@ const hubCopy = isFrench
 const articleCopy = isFrench
   ? {
       home: 'Accueil', hub: 'Conseils', by: 'Par', published: 'Publié le', updated: 'Mis à jour le',
+      toc: 'Dans cet article', tocOpen: 'Afficher le sommaire',
+      railCta: 'Pour votre équipe spa', railCtaCopy: 'Transformez ces principes en standards partagés grâce à une formation ciblée.',
       serviceEyebrow: 'Pour votre établissement', serviceTitle: 'Transformer l’observation en priorités concrètes.',
       serviceCopy: '2Hands accompagne les hôtels, resorts, riads et spas avec une approche technique, humaine et directement reliée aux réalités de l’équipe.',
       relatedEyebrow: 'À lire également', relatedTitle: 'Poursuivre la réflexion', read: 'Lire l’article',
     }
   : {
       home: 'Home', hub: 'Insights', by: 'By', published: 'Published', updated: 'Updated',
+      toc: 'In this article', tocOpen: 'Show article contents',
+      railCta: 'For your spa team', railCtaCopy: 'Turn these principles into shared standards through focused team training.',
       serviceEyebrow: 'For your property', serviceTitle: 'Turn observation into clear priorities.',
       serviceCopy: '2Hands supports hotels, resorts, riads and spas with a technical, human approach grounded in the realities of the team.',
       relatedEyebrow: 'Related reading', relatedTitle: 'Continue exploring', read: 'Read the article',
     };
 
 let Content: Awaited<ReturnType<typeof render>>['Content'] | undefined;
+let articleHeadings: Awaited<ReturnType<typeof render>>['headings'] = [];
 let frPath = blogRoutes.fr;
 let enPath = blogRoutes.en;
 let relatedPosts: BlogEntry[] = [];
@@ -74,7 +79,9 @@ if (props.kind === 'hub') {
 }
 
 if (props.kind === 'article') {
-  ({ Content } = await render(props.entry));
+  const rendered = await render(props.entry);
+  Content = rendered.Content;
+  articleHeadings = rendered.headings.filter((heading) => heading.depth === 2);
   frPath = language === 'fr' ? blogArticlePath('fr', props.entry.data.slug) : blogArticlePath('fr', props.translation.data.slug);
   enPath = language === 'en' ? blogArticlePath('en', props.entry.data.slug) : blogArticlePath('en', props.translation.data.slug);
   const requestedKeys = new Set(props.entry.data.relatedTranslationKeys);
@@ -139,7 +146,13 @@ if (props.kind === 'article') {
         </div></div>
       </div></header>
       <div class="container blog-hero-image"><Image src={props.entry.data.heroImage} alt={props.entry.data.heroImageAlt} widths={[720, 1100, 1500]} sizes="(min-width: 900px) 1200px, 100vw" loading="eager" /></div>
-      <div class="container blog-article-layout"><aside class="blog-article-rail" aria-label={isFrench ? 'Informations sur l’article' : 'Article information'}><span>Expertise</span><p>{props.entry.data.primaryKeyword}</p></aside><div class="blog-article-body">{Content && <Content />}</div></div>
+      <div class="container blog-article-layout"><aside class="blog-article-rail">
+        <div class="blog-article-rail-inner">
+          <nav class="blog-article-toc" aria-label={articleCopy.toc}><span>{articleCopy.toc}</span><ol>{articleHeadings.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></nav>
+          <div class="blog-rail-cta"><span>{articleCopy.railCta}</span><p>{articleCopy.railCtaCopy}</p><a class="button button-primary" href={props.entry.data.serviceUrl}>{props.entry.data.serviceLabel}</a></div>
+        </div>
+        <details class="blog-mobile-toc"><summary>{articleCopy.tocOpen}</summary><nav aria-label={articleCopy.toc}><ol>{articleHeadings.map((heading) => <li><a href={`#${heading.slug}`}>{heading.text}</a></li>)}</ol></nav></details>
+      </aside><div class="blog-article-body">{Content && <Content />}</div></div>
       <section class="blog-service-cta"><div class="container blog-service-cta-inner"><div><span class="eyebrow eyebrow-light">{articleCopy.serviceEyebrow}</span><h2>{articleCopy.serviceTitle}</h2></div><div><p>{articleCopy.serviceCopy}</p><a class="button button-cream" href={props.entry.data.serviceUrl}>{props.entry.data.serviceLabel}</a></div></div></section>
       {relatedPosts.length > 0 && <section class="blog-related" aria-labelledby="related-title"><div class="container"><span class="eyebrow">{articleCopy.relatedEyebrow}</span><h2 id="related-title">{articleCopy.relatedTitle}</h2><div class="blog-related-grid">{relatedPosts.map((post) => <article><time datetime={post.data.publishedAt.toISOString()}>{formatDate(post.data.publishedAt)}</time><h3><a href={blogArticlePath(language, post.data.slug)}>{post.data.title}</a></h3><a class="text-link" href={blogArticlePath(language, post.data.slug)}>{articleCopy.read}</a></article>)}</div></div></section>}
     </article></main>

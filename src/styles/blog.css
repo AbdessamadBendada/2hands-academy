@@ -35,13 +35,21 @@
 .blog-article-meta a { color: var(--espresso); font-weight: 750; border-bottom: 1px solid var(--bronze); }
 .blog-hero-image { max-width: 1280px; }
 .blog-hero-image img { width: 100%; max-height: 760px; object-fit: cover; border-radius: 28px; }
-.blog-article-layout { display: grid; max-width: 1120px; grid-template-columns: 180px minmax(0, 760px); justify-content: space-between; gap: 72px; padding-top: clamp(72px, 9vw, 122px); padding-bottom: clamp(84px, 10vw, 142px); }
-.blog-article-rail { align-self: start; padding-top: 10px; border-top: 1px solid var(--line); }
-.blog-article-rail span { display: block; margin: 14px 0 8px; color: var(--clay); font-size: 0.64rem; font-weight: 750; letter-spacing: 0.13em; text-transform: uppercase; }
-.blog-article-rail p { color: var(--ink-soft); font-size: 0.78rem; line-height: 1.55; }
+.blog-article-layout { display: grid; max-width: 1240px; grid-template-columns: minmax(145px, 170px) minmax(0, 900px); justify-content: space-between; gap: clamp(40px, 5vw, 68px); padding-top: clamp(72px, 9vw, 122px); padding-bottom: clamp(84px, 10vw, 142px); }
+.blog-article-rail { min-width: 0; align-self: stretch; }
+.blog-article-rail-inner { position: sticky; top: 108px; display: grid; gap: 30px; }
+.blog-article-toc { padding-top: 18px; border-top: 1px solid var(--line); }
+.blog-article-toc > span, .blog-rail-cta > span { display: block; margin-bottom: 13px; color: var(--clay); font-size: 0.64rem; font-weight: 750; letter-spacing: 0.13em; text-transform: uppercase; }
+.blog-article-toc ol { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.blog-article-toc a { display: block; color: var(--ink-soft); font-size: 0.72rem; line-height: 1.45; transition: color 180ms ease, transform 180ms ease; }
+.blog-article-toc a:hover, .blog-article-toc a:focus-visible { color: var(--green-deep); transform: translateX(3px); }
+.blog-rail-cta { padding: 20px 18px; border: 1px solid rgba(61, 87, 72, 0.22); border-radius: 16px; background: rgba(61, 87, 72, 0.055); }
+.blog-rail-cta p { margin-bottom: 16px; color: var(--ink-soft); font-size: 0.72rem; line-height: 1.55; }
+.blog-rail-cta .button { width: 100%; min-height: 0; padding: 11px 10px; white-space: normal; font-size: 0.58rem; line-height: 1.35; text-align: center; }
+.blog-mobile-toc { display: none; }
 .blog-article-body { color: #3c332d; font-size: clamp(1.03rem, 1.2vw, 1.13rem); line-height: 1.9; }
 .blog-article-body > :first-child { margin-top: 0; }
-.blog-article-body h2 { margin: 2.3em 0 0.65em; color: var(--espresso); font-size: clamp(2.2rem, 3.6vw, 3.35rem); }
+.blog-article-body h2 { margin: 2.3em 0 0.65em; scroll-margin-top: 110px; color: var(--espresso); font-size: clamp(2.15rem, 3vw, 3rem); text-wrap: balance; }
 .blog-article-body h3 { margin: 2em 0 0.6em; color: var(--espresso); font-size: clamp(1.55rem, 2.4vw, 2.1rem); }
 .blog-article-body p { margin-bottom: 1.45em; }
 .blog-article-body a { color: var(--green-deep); text-decoration: underline; text-decoration-color: var(--bronze); text-underline-offset: 4px; }
@@ -74,8 +82,13 @@
   .blog-card-featured { grid-template-columns: 1fr; }
   .blog-card-featured .blog-card-image { min-height: 440px; }
   .blog-card-featured .blog-card-content { min-height: 360px; }
-  .blog-article-layout { grid-template-columns: 1fr; gap: 26px; }
-  .blog-article-rail { display: none; }
+  .blog-article-layout { grid-template-columns: 1fr; gap: 38px; }
+  .blog-article-rail-inner { display: none; }
+  .blog-mobile-toc { display: block; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .blog-mobile-toc summary { padding: 16px 0; color: var(--clay); cursor: pointer; font-size: 0.68rem; font-weight: 750; letter-spacing: 0.1em; text-transform: uppercase; }
+  .blog-mobile-toc nav { padding: 4px 0 20px; }
+  .blog-mobile-toc ol { display: grid; gap: 10px; margin: 0; padding-left: 20px; }
+  .blog-mobile-toc a { color: var(--ink-soft); font-size: 0.84rem; line-height: 1.45; }
   .blog-related-grid { grid-template-columns: 1fr; }
   .blog-related-grid article { min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); }
   .blog-related-grid article:last-child { border-bottom: 0; }
